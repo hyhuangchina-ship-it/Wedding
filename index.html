@@ -1,0 +1,1458 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>轻法式婚礼电子请柬 Demo</title>
+  <style>
+    :root {
+      --paper: #fff9ef;
+      --ink: #2d2925;
+      --muted: #756a61;
+      --gold: #b9975c;
+      --rose: #b87972;
+      --sage: #87907a;
+      --line: rgba(57, 47, 38, .16);
+      --glass: rgba(255, 249, 239, .74);
+      --white: #fffaf2;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(120deg, rgba(255, 249, 239, .88), rgba(235, 224, 209, .74)),
+        url("assets/微信图片_20260531212753_9_2.jpg") center / cover;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      position: relative;
+      width: min(430px, 100vw);
+      height: 100svh;
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 24px 80px rgba(50, 39, 31, .18);
+      isolation: isolate;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: 1fr;
+      min-height: 100%;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(26px) scale(.985);
+      transition: opacity .62s ease, transform .62s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+      z-index: 2;
+    }
+
+    .slide.prev {
+      transform: translateY(-24px) scale(.985);
+    }
+
+    .photo-bg,
+    .bg-photo {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bg-carousel {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .bg-photo {
+      z-index: auto;
+      opacity: 0;
+      transform: scale(1.04);
+      transition: opacity 1.2s ease, transform 6s ease;
+    }
+
+    .bg-photo.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .veil {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(180deg, rgba(29, 24, 20, .08), rgba(29, 24, 20, .34) 44%, rgba(29, 24, 20, .82));
+    }
+
+    .content {
+      display: flex;
+      min-height: 100%;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+      padding: max(24px, env(safe-area-inset-top)) 24px max(28px, env(safe-area-inset-bottom));
+    }
+
+    .light {
+      color: var(--white);
+    }
+
+    .cream {
+      background:
+        linear-gradient(180deg, rgba(255, 249, 239, .96), rgba(244, 235, 222, .94)),
+        url("assets/微信图片_20260531212823_22_2.jpg") center / cover;
+    }
+
+    .cream::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 249, 239, .72);
+    }
+
+    .cream .content {
+      position: relative;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "STSong", serif;
+      font-size: clamp(42px, 15vw, 68px);
+      font-weight: 400;
+      line-height: .96;
+      letter-spacing: 0;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", "STSong", serif;
+      font-size: clamp(34px, 10vw, 48px);
+      font-weight: 400;
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.76;
+    }
+
+    .light .lead {
+      color: rgba(255, 250, 242, .82);
+    }
+
+    .chip {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      min-height: 34px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 0 12px;
+      background: rgba(255, 255, 255, .14);
+      font-size: 12px;
+      font-weight: 800;
+      backdrop-filter: blur(12px);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .button-row.three {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      padding: 0 14px;
+      color: inherit;
+      background: rgba(255, 255, 255, .14);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      color: #302820;
+      background: var(--white);
+    }
+
+    .icon-button {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(255, 250, 242, .72);
+      border-radius: 999px;
+      color: inherit;
+      background: rgba(255, 255, 255, .14);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    .icon-button svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 1.8;
+    }
+
+    .hero-names {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(58px, 18vw, 82px);
+      font-weight: 400;
+      line-height: .9;
+      letter-spacing: 0;
+    }
+
+    .top-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+    }
+
+    .couple {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .person {
+      min-height: 70px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 8px;
+      background: rgba(255, 255, 255, .58);
+      text-align: center;
+    }
+
+    .person strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", "STSong", serif;
+      font-size: 23px;
+      font-weight: 400;
+    }
+
+    .person span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .amp {
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 26px;
+    }
+
+    .info-stack {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .countdown {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .timebox,
+    .venue-box,
+    .schedule-item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .6);
+    }
+
+    .timebox {
+      min-height: 64px;
+      padding: 8px 4px;
+      text-align: center;
+    }
+
+    .timebox strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 23px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .timebox span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .venue-box {
+      display: grid;
+      gap: 9px;
+      padding: 12px;
+    }
+
+    .venue-photo {
+      width: 100%;
+      height: 104px;
+      border-radius: 7px;
+      object-fit: cover;
+    }
+
+    .venue-box h3 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    .venue-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .map-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .map-row a {
+      display: inline-flex;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--white);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .schedule-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .schedule-item {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 54px;
+      padding: 9px 10px;
+    }
+
+    .schedule-item time {
+      color: var(--rose);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 16px;
+    }
+
+    .schedule-item strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 14px;
+    }
+
+    .schedule-item span {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .travel .content {
+      justify-content: start;
+      gap: 14px;
+      overflow: hidden;
+      padding-bottom: max(18px, env(safe-area-inset-bottom));
+    }
+
+    .travel-head {
+      position: relative;
+      z-index: 1;
+    }
+
+    .travel .section-title {
+      font-size: clamp(30px, 8vw, 38px);
+      line-height: 1.08;
+    }
+
+    .guide-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .guide-stat {
+      min-height: 58px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px;
+      background: rgba(255, 255, 255, .58);
+    }
+
+    .guide-stat strong {
+      display: block;
+      color: var(--rose);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .guide-stat span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .guide-panel {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      min-height: 0;
+      gap: 10px;
+      overflow: auto;
+      padding: 2px 2px 58px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .guide-panel::-webkit-scrollbar {
+      display: none;
+    }
+
+    .search-box {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      display: grid;
+      gap: 9px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 249, 239, .9);
+      backdrop-filter: blur(18px);
+    }
+
+    .search-box input {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 14px;
+      color: var(--ink);
+      background: var(--white);
+      font: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .filter-row,
+    .route-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+
+    .filter-row::-webkit-scrollbar,
+    .route-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-chip,
+    .route-tab {
+      flex: 0 0 auto;
+      min-height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 0 12px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .62);
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .filter-chip.active,
+    .route-tab.active {
+      border-color: transparent;
+      color: var(--white);
+      background: var(--ink);
+    }
+
+    .route-view {
+      display: grid;
+      gap: 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: rgba(255, 255, 255, .62);
+    }
+
+    .route-view h3,
+    .guide-card h3 {
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    .route-view p,
+    .guide-card p,
+    .empty-guide {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .route-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      color: var(--rose);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .route-line span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      border-radius: 999px;
+      padding: 0 9px;
+      background: rgba(184, 121, 114, .1);
+    }
+
+    .guide-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .guide-card {
+      display: grid;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: rgba(255, 255, 255, .62);
+    }
+
+    .guide-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .guide-pill {
+      display: inline-flex;
+      min-height: 24px;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0 8px;
+      color: var(--muted);
+      background: rgba(135, 144, 122, .12);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .guide-pill.distance {
+      color: var(--rose);
+      background: rgba(184, 121, 114, .12);
+    }
+
+    .guide-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .guide-actions a,
+    .route-link {
+      display: inline-flex;
+      min-height: 36px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--ink);
+      background: var(--white);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .route-link {
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    .empty-guide {
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .gallery {
+      position: relative;
+      overflow: hidden;
+      min-height: 60vh;
+      margin-top: 22px;
+      border-radius: 8px;
+      background: #211c18;
+      box-shadow: 0 16px 38px rgba(50, 39, 31, .16);
+    }
+
+    .gallery-frame {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease, transform 5s ease;
+    }
+
+    .gallery-frame::before {
+      content: "";
+      position: absolute;
+      inset: -22px;
+      background: var(--photo) center / cover;
+      filter: blur(18px);
+      opacity: .62;
+      transform: scale(1.06);
+    }
+
+    .gallery-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(33, 28, 24, .1), rgba(33, 28, 24, .32));
+    }
+
+    .gallery-frame img {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 10px;
+      filter: drop-shadow(0 16px 28px rgba(24, 19, 16, .3));
+      transform: scale(.98);
+      transition: transform 5s ease;
+    }
+
+    .gallery-frame.active {
+      opacity: 1;
+    }
+
+    .gallery-frame.active img {
+      transform: scale(1);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border: 1px solid rgba(255, 250, 242, .5);
+      border-radius: 999px;
+      padding: 9px 12px;
+      color: var(--white);
+      background: rgba(31, 25, 21, .34);
+      font-size: 12px;
+      backdrop-filter: blur(14px);
+    }
+
+    .gallery-caption strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 15px;
+      font-weight: 400;
+    }
+
+    .thanks {
+      text-align: center;
+    }
+
+    .thanks .title {
+      font-size: clamp(60px, 20vw, 86px);
+    }
+
+    .footer-date {
+      margin-top: 22px;
+      color: var(--gold);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+    }
+
+    .pager {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      z-index: 30;
+      display: grid;
+      gap: 8px;
+      transform: translateY(-50%);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(45, 41, 37, .28);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      height: 20px;
+      background: var(--gold);
+    }
+
+    .next {
+      position: absolute;
+      left: 50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      z-index: 30;
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid rgba(45, 41, 37, .24);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255, 249, 239, .76);
+      transform: translateX(-50%);
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      animation: float 1.6s ease-in-out infinite;
+    }
+
+    .next svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .light + .pager .dot,
+    .hero ~ .pager .dot {
+      background: rgba(255, 250, 242, .38);
+    }
+
+    .active .reveal {
+      animation: rise .72s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .active .reveal:nth-child(2) {
+      animation-delay: .08s;
+    }
+
+    .active .reveal:nth-child(3) {
+      animation-delay: .16s;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translate(-50%, 0);
+      }
+
+      50% {
+        transform: translate(-50%, -6px);
+      }
+    }
+
+    @media (max-width: 430px) {
+      .app {
+        width: 100vw;
+        box-shadow: none;
+      }
+
+      .content {
+        padding-inline: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app" aria-label="轻法式婚礼电子请柬">
+    <section class="slide active light" aria-label="封面">
+      <div class="bg-carousel" data-carousel="hero">
+        <img class="bg-photo active" src="assets/微信图片_20260531212753_9_2.jpg" alt="黄洪逸和庞璐婚纱照一">
+        <img class="bg-photo" src="assets/微信图片_20260531212817_19_2.jpg" alt="黄洪逸和庞璐婚纱照二">
+        <img class="bg-photo" src="assets/微信图片_20260531212843_29_2.jpg" alt="黄洪逸和庞璐婚纱照三">
+      </div>
+      <div class="veil"></div>
+      <div class="content">
+        <div class="top-actions reveal">
+          <span class="chip">JULY 18, 2026</span>
+          <button class="icon-button" type="button" aria-label="音乐开关" id="musicButton">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+              <path d="M9 18V5l10-2v13"></path>
+              <circle cx="7" cy="18" r="3"></circle>
+              <circle cx="17" cy="16" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        <div>
+          <h1 class="hero-names reveal">Huang & Pang</h1>
+          <p class="lead reveal">我们将在夏夜的灯光里举行婚礼，诚邀你一起见证这段新的旅程。</p>
+          <div class="button-row three reveal">
+            <button class="button primary" type="button" data-next>开启请柬</button>
+            <button class="button" type="button" data-goto="1">查看地点</button>
+            <button class="button" type="button" data-goto="2">周边攻略</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide cream" aria-label="邀请与地点">
+      <div class="content">
+        <div>
+          <p class="kicker reveal">Invitation</p>
+          <h2 class="section-title reveal">婚礼信息</h2>
+          <p class="lead reveal">没有冗长流程，也不设置到场登记。我们只愿你在方便的时候来到现场，和我们一起吃饭、拍照、聊天、举杯。</p>
+          <div class="couple reveal">
+            <div class="person">
+              <strong>黄洪逸</strong>
+              <span>新郎</span>
+            </div>
+            <div class="amp">&</div>
+            <div class="person">
+              <strong>庞璐</strong>
+              <span>新娘</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-stack reveal">
+          <div class="countdown" aria-label="婚礼倒计时">
+            <div class="timebox"><strong id="days">--</strong><span>天</span></div>
+            <div class="timebox"><strong id="hours">--</strong><span>小时</span></div>
+            <div class="timebox"><strong id="minutes">--</strong><span>分钟</span></div>
+            <div class="timebox"><strong id="seconds">--</strong><span>秒</span></div>
+          </div>
+          <div class="venue-box">
+            <img class="venue-photo" src="assets/hotel.jpg" alt="钻石大酒店水晶厅">
+            <h3>福建省漳州市龙海区钻石大酒店 · 水晶厅</h3>
+            <p>2026 年 7 月 18 日 18:00。建议提前 30 分钟到达，现场以酒店指引为准。</p>
+            <div class="map-row">
+              <a href="https://map.baidu.com/search/福建省漳州市龙海区钻石大酒店/" target="_blank" rel="noreferrer">百度地图</a>
+              <a href="https://uri.amap.com/search?keyword=福建省漳州市龙海区钻石大酒店&city=漳州" target="_blank" rel="noreferrer">高德导航</a>
+            </div>
+            <button class="button primary" type="button" data-goto="2">查看 20km 周边攻略</button>
+          </div>
+          <div class="schedule-list">
+            <div class="schedule-item">
+              <time>17:30</time>
+              <div><strong>宾客入场</strong><span>签到、合影、入席</span></div>
+            </div>
+            <div class="schedule-item">
+              <time>18:00</time>
+              <div><strong>婚礼仪式</strong><span>证婚、誓言与合影</span></div>
+            </div>
+            <div class="schedule-item">
+              <time>18:30</time>
+              <div><strong>晚宴开始</strong><span>敬酒、用餐、亲友致意</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide cream travel" aria-label="周边旅游攻略">
+      <div class="content">
+        <div class="travel-head">
+          <p class="kicker reveal">Travel Guide</p>
+          <h2 class="section-title reveal">龙海 20km 微旅行</h2>
+          <p class="lead reveal">以钻石大酒店为中心，整理 7 月 17-19 日适合亲友顺路逛吃的单点清单。可按分类筛选、关键词检索，也能查看几条轻量路线组合。</p>
+          <div class="guide-summary reveal">
+            <div class="guide-stat"><strong>20km</strong><span>酒店周边半径</span></div>
+            <div class="guide-stat"><strong>7.17-7.19</strong><span>夏季周末适用</span></div>
+            <div class="guide-stat"><strong>18+</strong><span>景点与美食点</span></div>
+          </div>
+        </div>
+
+        <div class="guide-panel reveal" data-stop-swipe>
+          <div class="search-box">
+            <input id="guideSearch" type="search" placeholder="搜索景点、美食、古街、海鲜..." aria-label="搜索周边攻略">
+            <div class="filter-row" id="guideFilters" aria-label="攻略分类"></div>
+          </div>
+
+          <div class="route-view" aria-live="polite">
+            <div class="route-tabs" id="routeTabs" aria-label="路线查看"></div>
+            <div id="routeDetail"></div>
+          </div>
+
+          <div class="guide-grid" id="guideList" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide cream" aria-label="相册">
+      <div class="content">
+        <div>
+          <p class="kicker reveal">Gallery</p>
+          <h2 class="section-title reveal">婚纱照与片刻</h2>
+          <p class="lead reveal">照片会自动播放，也可以停留在这一页慢慢看。正式上线前建议压缩图片体积，移动端加载会更顺。</p>
+        </div>
+        <div class="gallery reveal" data-carousel="gallery">
+          <div class="gallery-frame active" style="--photo: url('assets/微信图片_20260531212808_14_2.jpg')">
+            <img src="assets/微信图片_20260531212808_14_2.jpg" alt="黄洪逸和庞璐婚纱照四">
+          </div>
+          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212826_24_2.jpg')">
+            <img src="assets/微信图片_20260531212826_24_2.jpg" alt="黄洪逸和庞璐婚纱照五">
+          </div>
+          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212835_27_2.jpg')">
+            <img src="assets/微信图片_20260531212835_27_2.jpg" alt="黄洪逸和庞璐婚纱照六">
+          </div>
+          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212910_37_2.jpg')">
+            <img src="assets/微信图片_20260531212910_37_2.jpg" alt="黄洪逸和庞璐婚纱照七">
+          </div>
+          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212921_41_2.jpg')">
+            <img src="assets/微信图片_20260531212921_41_2.jpg" alt="黄洪逸和庞璐婚纱照八">
+          </div>
+          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212935_45_2.jpg')">
+            <img src="assets/微信图片_20260531212935_45_2.jpg" alt="黄洪逸和庞璐婚纱照九">
+          </div>
+          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212955_52_2.jpg')">
+            <img src="assets/微信图片_20260531212955_52_2.jpg" alt="黄洪逸和庞璐婚纱照十">
+          </div>
+          <div class="gallery-caption">
+            <strong>Wedding Gallery</strong>
+            <span>Auto Play</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide light thanks" aria-label="结尾感谢">
+      <img class="photo-bg" src="assets/place.jpg" alt="钻石大酒店水晶厅">
+      <div class="veil"></div>
+      <div class="content">
+        <span class="chip reveal">See You Soon</span>
+        <div>
+          <h2 class="title reveal">Merci</h2>
+          <p class="lead reveal">感谢你来到我们的生命现场。2026 年 7 月 18 日 18:00，我们在漳州等你。</p>
+          <div class="footer-date reveal">黄洪逸 & 庞璐</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="pager" aria-label="页面进度"></div>
+    <button class="next" type="button" aria-label="下一页" data-next>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
+        <path d="m6 9 6 6 6-6"></path>
+      </svg>
+    </button>
+  </main>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const pager = document.querySelector(".pager");
+    const nextButtons = document.querySelectorAll("[data-next]");
+    const gotoButtons = document.querySelectorAll("[data-goto]");
+    let index = 0;
+    let locked = false;
+    let startY = 0;
+
+    slides.forEach((_, slideIndex) => {
+      const dot = document.createElement("button");
+      dot.className = "dot";
+      dot.type = "button";
+      dot.setAttribute("aria-label", `跳转到第 ${slideIndex + 1} 页`);
+      dot.addEventListener("click", () => goTo(slideIndex));
+      pager.append(dot);
+    });
+
+    function render() {
+      slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === index);
+        slide.classList.toggle("prev", slideIndex < index);
+      });
+      Array.from(pager.children).forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === index);
+      });
+      document.querySelector(".next").style.display = index === slides.length - 1 ? "none" : "grid";
+    }
+
+    function goTo(nextIndex) {
+      if (locked) return;
+      const bounded = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      if (bounded === index) return;
+      locked = true;
+      index = bounded;
+      render();
+      window.setTimeout(() => {
+        locked = false;
+      }, 660);
+    }
+
+    function next() {
+      goTo(index + 1);
+    }
+
+    function previous() {
+      goTo(index - 1);
+    }
+
+    nextButtons.forEach((button) => button.addEventListener("click", next));
+    gotoButtons.forEach((button) => {
+      button.addEventListener("click", () => goTo(Number(button.dataset.goto)));
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown" || event.key === "PageDown") next();
+      if (event.key === "ArrowUp" || event.key === "PageUp") previous();
+    });
+
+    window.addEventListener("wheel", (event) => {
+      if (event.target.closest("[data-stop-swipe]")) return;
+      if (Math.abs(event.deltaY) < 24) return;
+      event.deltaY > 0 ? next() : previous();
+    }, { passive: true });
+
+    window.addEventListener("touchstart", (event) => {
+      if (event.target.closest("[data-stop-swipe]")) {
+        startY = null;
+        return;
+      }
+      startY = event.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      if (startY === null || event.target.closest("[data-stop-swipe]")) return;
+      const endY = event.changedTouches[0].clientY;
+      const delta = startY - endY;
+      if (Math.abs(delta) < 42) return;
+      delta > 0 ? next() : previous();
+    }, { passive: true });
+
+    function autoPlayCarousel(selector, intervalMs) {
+      const carousels = document.querySelectorAll(selector);
+      carousels.forEach((carousel) => {
+        const photos = Array.from(carousel.querySelectorAll(":scope > img, :scope > .gallery-frame"));
+        if (photos.length < 2) return;
+        let current = Math.max(0, photos.findIndex((photo) => photo.classList.contains("active")));
+        window.setInterval(() => {
+          photos[current].classList.remove("active");
+          current = (current + 1) % photos.length;
+          photos[current].classList.add("active");
+        }, intervalMs);
+      });
+    }
+
+    const guideItems = [
+      {
+        name: "紫云公园 / 紫云山",
+        category: "景点",
+        distance: "1-3km",
+        time: "清晨 / 傍晚",
+        tags: ["近距离", "登高", "散步"],
+        desc: "离酒店很近的山景休闲点，适合婚礼前后短时间透气，看九龙江方向的城市风景。",
+        query: "漳州 龙海 紫云公园"
+      },
+      {
+        name: "月港古镇",
+        category: "古迹",
+        distance: "3-5km",
+        time: "傍晚",
+        tags: ["海丝古港", "古街", "人文"],
+        desc: "明代海上丝路名港，适合放慢脚步看古街巷、古码头和海澄一带的老城肌理。",
+        query: "漳州 龙海 月港古镇"
+      },
+      {
+        name: "后港古街 / 石码老街",
+        category: "古街",
+        distance: "4-6km",
+        time: "晚上",
+        tags: ["夜游", "小吃", "烟火气"],
+        desc: "龙海老城烟火气最集中的一带，晚上更舒服，适合把小吃和散步安排在一起。",
+        query: "漳州 龙海 后港古街"
+      },
+      {
+        name: "龙江颂景区",
+        category: "景点",
+        distance: "8-12km",
+        time: "傍晚",
+        tags: ["江景", "步道", "夜景"],
+        desc: "江景、步道和龙海文旅地标感比较完整，夏天建议避开正午，傍晚去更舒服。",
+        query: "漳州 龙海 龙江颂景区"
+      },
+      {
+        name: "埭美古村",
+        category: "拍照",
+        distance: "10-15km",
+        time: "上午",
+        tags: ["红砖古厝", "水上古村", "出片"],
+        desc: "闽南红砖古厝和水系环绕的古村，辨识度高，适合亲友拍照打卡。",
+        query: "漳州 龙海 埭美古村"
+      },
+      {
+        name: "江东桥 / 虎渡桥",
+        category: "古迹",
+        distance: "15-20km",
+        time: "上午",
+        tags: ["宋代古桥", "文保", "短停留"],
+        desc: "历史感很强的古桥点位，停留时间不用太长，适合对古迹感兴趣的宾客。",
+        query: "漳州 江东桥 虎渡桥"
+      },
+      {
+        name: "漳州古城",
+        category: "古街",
+        distance: "18-22km",
+        time: "下午 / 晚上",
+        tags: ["压线点", "古城", "小吃"],
+        desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中；严格 20km 时可作为边界备选。",
+        query: "漳州古城"
+      },
+      {
+        name: "南山寺",
+        category: "古迹",
+        distance: "18-22km",
+        time: "上午",
+        tags: ["千年古刹", "安静", "边界备选"],
+        desc: "靠近漳州主城的寺庙古迹，适合喜欢安静参观的亲友，可与古城二选一。",
+        query: "漳州 南山寺"
+      },
+      {
+        name: "云洞岩",
+        category: "景点",
+        distance: "20km 左右",
+        time: "清晨",
+        tags: ["山水石刻", "4A", "偏外"],
+        desc: "漳州知名山水石刻景区，可能略超 20km，适合作为有车亲友的延伸备选。",
+        query: "漳州 云洞岩"
+      },
+      {
+        name: "石码五香",
+        category: "美食",
+        distance: "4-6km",
+        time: "午后 / 夜宵",
+        tags: ["龙海代表", "炸物", "必吃"],
+        desc: "豆皮炸卷外酥内香，是龙海最有代表性的古早味之一，和卤面搭配很稳。",
+        query: "龙海 石码五香"
+      },
+      {
+        name: "卤面",
+        category: "美食",
+        distance: "4-6km",
+        time: "午餐 / 晚餐",
+        tags: ["主食", "闽南味", "配五香"],
+        desc: "浓稠卤汤配料丰富，游客接受度高，适合作为石码小吃的主食担当。",
+        query: "龙海 石码 卤面"
+      },
+      {
+        name: "面线糊",
+        category: "美食",
+        distance: "4-6km",
+        time: "早餐 / 夜宵",
+        tags: ["早餐", "夜宵", "热乎"],
+        desc: "适合配油条、卤蛋、醋肉或大肠，夏天晚上吃也不会太重。",
+        query: "龙海 石码 面线糊"
+      },
+      {
+        name: "锅边糊",
+        category: "美食",
+        distance: "4-8km",
+        time: "早餐",
+        tags: ["古早味", "清爽", "早餐"],
+        desc: "本地早餐感很强，口味清爽，适合不想吃太油的亲友。",
+        query: "龙海 锅边糊"
+      },
+      {
+        name: "米筛目",
+        category: "美食",
+        distance: "4-6km",
+        time: "午餐 / 夜宵",
+        tags: ["本地特色", "口感特别", "小吃"],
+        desc: "口感有记忆点，可作为石码小吃清单里的特色补充。",
+        query: "龙海 石码 米筛目"
+      },
+      {
+        name: "肉粽",
+        category: "美食",
+        distance: "4-8km",
+        time: "早餐 / 加餐",
+        tags: ["闽南小吃", "好接受", "加餐"],
+        desc: "闽南常见小吃，适合放进小吃九宫格，也适合打包带走。",
+        query: "龙海 肉粽"
+      },
+      {
+        name: "海蛎煎",
+        category: "美食",
+        distance: "4-10km",
+        time: "晚餐 / 夜宵",
+        tags: ["海味", "排档", "夜市"],
+        desc: "海味明显，适合在老街或排档场景里顺手点一份。",
+        query: "龙海 海蛎煎"
+      },
+      {
+        name: "鸭肉粥",
+        category: "美食",
+        distance: "4-8km",
+        time: "夜宵",
+        tags: ["清淡", "夜宵", "收尾"],
+        desc: "比炸物更清淡，适合晚间收尾，也适合长辈口味。",
+        query: "龙海 鸭肉粥"
+      },
+      {
+        name: "海澄 / 月港海鲜排档",
+        category: "美食",
+        distance: "3-8km",
+        time: "晚餐",
+        tags: ["多人聚餐", "海鲜", "江口风味"],
+        desc: "适合多人正餐，想吃本地海鲜和江口风味时可以优先看海澄、月港一带。",
+        query: "龙海 海澄 月港 海鲜排档"
+      }
+    ];
+
+    const guideCategories = ["全部", "景点", "古迹", "古街", "拍照", "美食"];
+    const guideRoutes = [
+      {
+        name: "老城夜游",
+        points: ["钻石大酒店", "后港古街", "石码老街", "五香 / 卤面"],
+        desc: "适合 7 月晚上，距离短、吃得集中，亲友自由度最高。",
+        query: "龙海钻石大酒店 到 后港古街 石码老街"
+      },
+      {
+        name: "海丝古港",
+        points: ["钻石大酒店", "月港古镇", "龙江颂景区", "海鲜排档"],
+        desc: "人文和江景都兼顾，建议傍晚走，避开正午高温。",
+        query: "龙海钻石大酒店 到 月港古镇 龙江颂景区"
+      },
+      {
+        name: "古厝拍照",
+        points: ["钻石大酒店", "埭美古村", "江东桥", "石码夜宵"],
+        desc: "适合自驾或打车，主打闽南红砖古厝和历史古桥。",
+        query: "龙海钻石大酒店 到 埭美古村 江东桥"
+      },
+      {
+        name: "漳州延伸",
+        points: ["钻石大酒店", "南山寺", "漳州古城", "古城小吃"],
+        desc: "更偏主城游，部分点位在 20km 边界，时间充裕再选。",
+        query: "龙海钻石大酒店 到 漳州古城 南山寺"
+      }
+    ];
+
+    let activeCategory = "全部";
+    let activeRoute = 0;
+
+    function amapSearchUrl(keyword) {
+      return `https://uri.amap.com/search?keyword=${encodeURIComponent(keyword)}&city=${encodeURIComponent("漳州")}`;
+    }
+
+    function baiduSearchUrl(keyword) {
+      return `https://map.baidu.com/search/${encodeURIComponent(keyword)}/`;
+    }
+
+    function renderGuideFilters() {
+      const filterWrap = document.querySelector("#guideFilters");
+      filterWrap.innerHTML = guideCategories.map((category) => (
+        `<button class="filter-chip${category === activeCategory ? " active" : ""}" type="button" data-category="${category}">${category}</button>`
+      )).join("");
+    }
+
+    function renderGuideList() {
+      const list = document.querySelector("#guideList");
+      const search = document.querySelector("#guideSearch").value.trim().toLowerCase();
+      const filtered = guideItems.filter((item) => {
+        const categoryMatch = activeCategory === "全部" || item.category === activeCategory;
+        const haystack = [item.name, item.category, item.distance, item.time, item.desc, ...item.tags].join(" ").toLowerCase();
+        return categoryMatch && haystack.includes(search);
+      });
+
+      if (!filtered.length) {
+        list.innerHTML = `<div class="empty-guide">没有找到匹配内容，换个关键词试试。</div>`;
+        return;
+      }
+
+      list.innerHTML = filtered.map((item) => (
+        `<article class="guide-card">
+          <div class="guide-meta">
+            <span class="guide-pill">${item.category}</span>
+            <span class="guide-pill distance">${item.distance}</span>
+            <span class="guide-pill">${item.time}</span>
+          </div>
+          <h3>${item.name}</h3>
+          <p>${item.desc}</p>
+          <div class="guide-meta">
+            ${item.tags.map((tag) => `<span class="guide-pill">${tag}</span>`).join("")}
+          </div>
+          <div class="guide-actions">
+            <a href="${amapSearchUrl(item.query)}" target="_blank" rel="noreferrer">高德查看</a>
+            <a href="${baiduSearchUrl(item.query)}" target="_blank" rel="noreferrer">百度查看</a>
+          </div>
+        </article>`
+      )).join("");
+    }
+
+    function renderRoutes() {
+      const tabs = document.querySelector("#routeTabs");
+      const detail = document.querySelector("#routeDetail");
+      tabs.innerHTML = guideRoutes.map((route, routeIndex) => (
+        `<button class="route-tab${routeIndex === activeRoute ? " active" : ""}" type="button" data-route="${routeIndex}">${route.name}</button>`
+      )).join("");
+
+      const route = guideRoutes[activeRoute];
+      detail.innerHTML = `
+        <h3>${route.name}</h3>
+        <div class="route-line">${route.points.map((point) => `<span>${point}</span>`).join("")}</div>
+        <p>${route.desc}</p>
+        <a class="route-link" href="${amapSearchUrl(route.query)}" target="_blank" rel="noreferrer">打开高德查看路线</a>
+      `;
+    }
+
+    function initTravelGuide() {
+      const search = document.querySelector("#guideSearch");
+      if (!search) return;
+
+      renderGuideFilters();
+      renderRoutes();
+      renderGuideList();
+
+      search.addEventListener("input", renderGuideList);
+      document.querySelector("#guideFilters").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-category]");
+        if (!button) return;
+        activeCategory = button.dataset.category;
+        renderGuideFilters();
+        renderGuideList();
+      });
+      document.querySelector("#routeTabs").addEventListener("click", (event) => {
+        const button = event.target.closest("[data-route]");
+        if (!button) return;
+        activeRoute = Number(button.dataset.route);
+        renderRoutes();
+      });
+    }
+
+    const weddingDate = new Date("2026-07-18T18:00:00+08:00");
+    const parts = {
+      days: document.querySelector("#days"),
+      hours: document.querySelector("#hours"),
+      minutes: document.querySelector("#minutes"),
+      seconds: document.querySelector("#seconds")
+    };
+
+    function updateCountdown() {
+      const diff = Math.max(0, weddingDate.getTime() - Date.now());
+      const totalSeconds = Math.floor(diff / 1000);
+      parts.days.textContent = String(Math.floor(totalSeconds / 86400));
+      parts.hours.textContent = String(Math.floor((totalSeconds % 86400) / 3600)).padStart(2, "0");
+      parts.minutes.textContent = String(Math.floor((totalSeconds % 3600) / 60)).padStart(2, "0");
+      parts.seconds.textContent = String(totalSeconds % 60).padStart(2, "0");
+    }
+
+    const musicButton = document.querySelector("#musicButton");
+    let musicOn = false;
+    musicButton.addEventListener("click", () => {
+      musicOn = !musicOn;
+      musicButton.style.background = musicOn ? "#fffaf2" : "rgba(255, 255, 255, .14)";
+      musicButton.style.color = musicOn ? "#2d2925" : "#fffaf2";
+      musicButton.setAttribute("aria-label", musicOn ? "关闭音乐" : "开启音乐");
+    });
+
+    render();
+    initTravelGuide();
+    autoPlayCarousel("[data-carousel='hero']", 4200);
+    autoPlayCarousel("[data-carousel='gallery']", 3200);
+    updateCountdown();
+    window.setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
