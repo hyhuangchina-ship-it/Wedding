@@ -170,7 +170,7 @@
     }
 
     .lead {
-      margin: 16px 0 0;
+      margin: 12px 0 0;
       color: var(--muted);
       font-size: 15px;
       line-height: 1.76;
@@ -312,6 +312,7 @@
     }
 
     .timebox,
+    .detail-box,
     .venue-box,
     .schedule-item {
       border: 1px solid var(--line);
@@ -338,6 +339,33 @@
       margin-top: 6px;
       color: var(--muted);
       font-size: 11px;
+    }
+
+    .wedding-details {
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-box {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 58px;
+      padding: 10px 12px;
+    }
+
+    .detail-box span {
+      color: var(--rose);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .detail-box strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.35;
     }
 
     .venue-box {
@@ -475,7 +503,7 @@
       min-height: 0;
       gap: 10px;
       overflow: auto;
-      padding: 2px 2px 58px;
+      padding: 0px 2px 58px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
@@ -743,6 +771,42 @@
       font-weight: 400;
     }
 
+    .gallery-only::before {
+      display: none;
+    }
+
+    .gallery-only .content {
+      min-height: 100%;
+      justify-content: stretch;
+      gap: 0;
+      padding: 0;
+    }
+
+    .gallery-only .gallery {
+      width: 100%;
+      height: 100svh;
+      min-height: 100%;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .gallery-only .gallery-frame::before {
+      inset: -28px;
+      filter: blur(22px);
+      opacity: .7;
+    }
+
+    .gallery-only .gallery-frame::after {
+      background: linear-gradient(180deg, rgba(33, 28, 24, .08), rgba(33, 28, 24, .2));
+    }
+
+    .gallery-only .gallery-frame img {
+      object-fit: contain;
+      padding: 0;
+      filter: drop-shadow(0 14px 28px rgba(24, 19, 16, .26));
+    }
+
     .thanks {
       text-align: center;
     }
@@ -780,30 +844,6 @@
     .dot.active {
       height: 20px;
       background: var(--gold);
-    }
-
-    .next {
-      position: absolute;
-      left: 50%;
-      bottom: max(14px, env(safe-area-inset-bottom));
-      z-index: 30;
-      display: grid;
-      width: 34px;
-      height: 34px;
-      place-items: center;
-      border: 1px solid rgba(45, 41, 37, .24);
-      border-radius: 999px;
-      color: var(--ink);
-      background: rgba(255, 249, 239, .76);
-      transform: translateX(-50%);
-      cursor: pointer;
-      backdrop-filter: blur(12px);
-      animation: float 1.6s ease-in-out infinite;
-    }
-
-    .next svg {
-      width: 17px;
-      height: 17px;
     }
 
     .light + .pager .dot,
@@ -873,9 +913,9 @@
   <main class="app" aria-label="轻法式婚礼电子请柬">
     <section class="slide active light" aria-label="封面">
       <div class="bg-carousel" data-carousel="hero">
-        <img class="bg-photo active" src="assets/微信图片_20260531212753_9_2.jpg" alt="黄洪逸和庞璐婚纱照一">
-        <img class="bg-photo" src="assets/微信图片_20260531212817_19_2.jpg" alt="黄洪逸和庞璐婚纱照二">
-        <img class="bg-photo" src="assets/微信图片_20260531212843_29_2.jpg" alt="黄洪逸和庞璐婚纱照三">
+        <img class="bg-photo active" src="assets/1.jpg" alt="黄洪逸和庞璐婚纱照一">
+        <img class="bg-photo" src="assets/2.jpg" alt="黄洪逸和庞璐婚纱照二">
+        <img class="bg-photo" src="assets/3.jpg" alt="黄洪逸和庞璐婚纱照三">
       </div>
       <div class="veil"></div>
       <div class="content">
@@ -921,6 +961,12 @@
           </div>
         </div>
         <div class="info-stack reveal">
+          <div class="wedding-details" aria-label="婚礼时间与地点">
+            <div class="detail-box">
+              <span>婚礼时间</span>
+              <strong>2026 年 7 月 18 日 18:00</strong>
+            </div>
+          </div>
           <div class="countdown" aria-label="婚礼倒计时">
             <div class="timebox"><strong id="days">--</strong><span>天</span></div>
             <div class="timebox"><strong id="hours">--</strong><span>小时</span></div>
@@ -979,7 +1025,7 @@
       </div>
     </section>
 
-    <section class="slide cream" aria-label="相册">
+    <section class="slide cream gallery-only" aria-label="相册">
       <div class="content">
         <div class="gallery reveal" data-carousel="gallery">
           <div class="gallery-frame active" style="--photo: url('assets/微信图片_20260531212808_14_2.jpg')">
@@ -1008,7 +1054,7 @@
     </section>
 
     <section class="slide light thanks" aria-label="结尾感谢">
-      <img class="photo-bg" src="assets/place.jpg" alt="钻石大酒店水晶厅">
+      <img class="photo-bg" src="assets/place2.jpg" alt="钻石大酒店水晶厅">
       <div class="veil"></div>
       <div class="content">
         <span class="chip reveal">See You Soon</span>
@@ -1025,11 +1071,6 @@
     </section>
 
     <div class="pager" aria-label="页面进度"></div>
-    <button class="next" type="button" aria-label="下一页" data-next>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
-        <path d="m6 9 6 6 6-6"></path>
-      </svg>
-    </button>
   </main>
 
   <script>
@@ -1040,6 +1081,7 @@
     let index = 0;
     let locked = false;
     let startY = 0;
+    let startX = 0;
 
     slides.forEach((_, slideIndex) => {
       const dot = document.createElement("button");
@@ -1058,7 +1100,6 @@
       Array.from(pager.children).forEach((dot, dotIndex) => {
         dot.classList.toggle("active", dotIndex === index);
       });
-      document.querySelector(".next").style.display = index === slides.length - 1 ? "none" : "grid";
     }
 
     function goTo(nextIndex) {
@@ -1100,17 +1141,26 @@
     window.addEventListener("touchstart", (event) => {
       if (event.target.closest("[data-stop-swipe]")) {
         startY = null;
+        startX = null;
         return;
       }
       startY = event.touches[0].clientY;
+      startX = event.touches[0].clientX;
     }, { passive: true });
 
     window.addEventListener("touchend", (event) => {
       if (startY === null || event.target.closest("[data-stop-swipe]")) return;
       const endY = event.changedTouches[0].clientY;
+      const endX = event.changedTouches[0].clientX;
       const delta = startY - endY;
-      if (Math.abs(delta) < 42) return;
+      const horizontalDelta = Math.abs(startX - endX);
+      if (Math.abs(delta) < 52 || Math.abs(delta) < horizontalDelta * 1.15) return;
       delta > 0 ? next() : previous();
+    }, { passive: true });
+
+    window.addEventListener("touchcancel", () => {
+      startY = null;
+      startX = null;
     }, { passive: true });
 
     function autoPlayCarousel(selector, intervalMs) {
