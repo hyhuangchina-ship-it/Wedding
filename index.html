@@ -34,7 +34,7 @@
       color: var(--ink);
       background:
         linear-gradient(120deg, rgba(255, 249, 239, .88), rgba(235, 224, 209, .74)),
-        url("assets/微信图片_20260531212753_9_2.jpg") center / cover;
+        url("assets/bg-cover.jpg") center / cover;
     }
 
     button {
@@ -128,7 +128,7 @@
     .cream {
       background:
         linear-gradient(180deg, rgba(255, 249, 239, .96), rgba(244, 235, 222, .94)),
-        url("assets/微信图片_20260531212823_22_2.jpg") center / cover;
+        url("assets/bg-soft.jpg") center / cover;
     }
 
     .cream::before {
@@ -910,6 +910,7 @@
   </style>
 </head>
 <body>
+  <audio id="bgm" src="assets/bgm.mp3" preload="auto" loop></audio>
   <main class="app" aria-label="轻法式婚礼电子请柬">
     <section class="slide active light" aria-label="封面">
       <div class="bg-carousel" data-carousel="hero">
@@ -1028,26 +1029,26 @@
     <section class="slide cream gallery-only" aria-label="相册">
       <div class="content">
         <div class="gallery reveal" data-carousel="gallery">
-          <div class="gallery-frame active" style="--photo: url('assets/微信图片_20260531212808_14_2.jpg')">
-            <img src="assets/微信图片_20260531212808_14_2.jpg" alt="黄洪逸和庞璐婚纱照四">
+          <div class="gallery-frame active" style="--photo: url('assets/gallery-01.jpg')">
+            <img src="assets/gallery-01.jpg" alt="黄洪逸和庞璐婚纱照四">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212826_24_2.jpg')">
-            <img src="assets/微信图片_20260531212826_24_2.jpg" alt="黄洪逸和庞璐婚纱照五">
+          <div class="gallery-frame" style="--photo: url('assets/gallery-02.jpg')">
+            <img src="assets/gallery-02.jpg" alt="黄洪逸和庞璐婚纱照五">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212835_27_2.jpg')">
-            <img src="assets/微信图片_20260531212835_27_2.jpg" alt="黄洪逸和庞璐婚纱照六">
+          <div class="gallery-frame" style="--photo: url('assets/gallery-03.jpg')">
+            <img src="assets/gallery-03.jpg" alt="黄洪逸和庞璐婚纱照六">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212910_37_2.jpg')">
-            <img src="assets/微信图片_20260531212910_37_2.jpg" alt="黄洪逸和庞璐婚纱照七">
+          <div class="gallery-frame" style="--photo: url('assets/gallery-04.jpg')">
+            <img src="assets/gallery-04.jpg" alt="黄洪逸和庞璐婚纱照七">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212921_41_2.jpg')">
-            <img src="assets/微信图片_20260531212921_41_2.jpg" alt="黄洪逸和庞璐婚纱照八">
+          <div class="gallery-frame" style="--photo: url('assets/gallery-05.jpg')">
+            <img src="assets/gallery-05.jpg" alt="黄洪逸和庞璐婚纱照八">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212935_45_2.jpg')">
-            <img src="assets/微信图片_20260531212935_45_2.jpg" alt="黄洪逸和庞璐婚纱照九">
+          <div class="gallery-frame" style="--photo: url('assets/gallery-06.jpg')">
+            <img src="assets/gallery-06.jpg" alt="黄洪逸和庞璐婚纱照九">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/微信图片_20260531212955_52_2.jpg')">
-            <img src="assets/微信图片_20260531212955_52_2.jpg" alt="黄洪逸和庞璐婚纱照十">
+          <div class="gallery-frame" style="--photo: url('assets/gallery-07.jpg')">
+            <img src="assets/gallery-07.jpg" alt="黄洪逸和庞璐婚纱照十">
           </div>
         </div>
       </div>
@@ -1480,12 +1481,39 @@
     }
 
     const musicButton = document.querySelector("#musicButton");
+    const bgm = document.querySelector("#bgm");
     let musicOn = false;
-    musicButton.addEventListener("click", () => {
-      musicOn = !musicOn;
+
+    function renderMusicButton() {
       musicButton.style.background = musicOn ? "#fffaf2" : "rgba(255, 255, 255, .14)";
       musicButton.style.color = musicOn ? "#2d2925" : "#fffaf2";
       musicButton.setAttribute("aria-label", musicOn ? "关闭音乐" : "开启音乐");
+    }
+
+    musicButton.addEventListener("click", async () => {
+      if (!bgm) return;
+      if (bgm.paused) {
+        try {
+          await bgm.play();
+          musicOn = true;
+        } catch (error) {
+          musicOn = false;
+        }
+      } else {
+        bgm.pause();
+        musicOn = false;
+      }
+      renderMusicButton();
+    });
+
+    bgm?.addEventListener("pause", () => {
+      musicOn = false;
+      renderMusicButton();
+    });
+
+    bgm?.addEventListener("play", () => {
+      musicOn = true;
+      renderMusicButton();
     });
 
     render();
