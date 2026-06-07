@@ -188,7 +188,7 @@
 .hero-copy {
   align-items: center;
   text-align: center;
-  padding-bottom: 34px;
+  padding-bottom: 50px;
 }
 
 .thanks-copy {
@@ -373,7 +373,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 11px 12px;
+  padding: 20px 12px;
   color: #756a61;
   font-size: 12px;
 }
@@ -387,7 +387,7 @@
 .countdown {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
+  gap: 12px 6px;
 }
 
 .timebox {

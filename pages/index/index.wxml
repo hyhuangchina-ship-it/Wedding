@@ -18,8 +18,7 @@
         <text class="lead light-lead reveal">有生之年，喜相逢。</text>
         <text class="lead light-lead reveal">佳期已定，婚礼见！</text>
         <view class="button-row three reveal">
-          <button class="button primary hero-main-button" type="button" bindtap="startInvitation">开启请柬</button>
-          <button class="button hero-secondary-button" type="button" data-index="1" bindtap="goTo">查看地点</button>
+          <button class="button primary hero-secondary-button" type="button" data-index="1" bindtap="goTo">查看地点</button>
           <button class="button hero-secondary-button" type="button" data-index="4" bindtap="goTo">周边攻略</button>
         </view>
       </view>
@@ -62,7 +61,7 @@
         <view class="venue-box">
           <image class="venue-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/hotel.jpg" mode="aspectFill" />
           <text class="venue-title">福建省漳州市龙海区钻石大酒店 · 水晶厅</text>
-          <text class="venue-desc">2026 年 7 月 18 日 18:00。建议提前 30 分钟到达，现场以酒店指引为准。</text>
+          <text class="venue-desc">2026 年 7 月 18 日 19:00。建议提前 30 分钟到达，现场以酒店指引为准。</text>
           <view class="map-row">
             <button class="map-primary" type="button" bindtap="openVenueLocation">打开地图</button>
             <button type="button" data-query="福建省漳州市龙海区钻石大酒店" bindtap="copyMapKeyword">复制地址</button>
@@ -71,15 +70,15 @@
 
         <view class="schedule-list">
           <view class="schedule-item">
-            <text class="schedule-time">17:45</text>
+            <text class="schedule-time">18:30</text>
             <view><text class="schedule-title">宾客入场</text><text class="schedule-desc">签到、合影、入席</text></view>
           </view>
           <view class="schedule-item">
-            <text class="schedule-time">18:00</text>
+            <text class="schedule-time">19:00</text>
             <view><text class="schedule-title">婚礼仪式</text><text class="schedule-desc">证婚、誓言与合影</text></view>
           </view>
           <view class="schedule-item">
-            <text class="schedule-time">18:30</text>
+            <text class="schedule-time">19:30</text>
             <view><text class="schedule-title">晚宴开始</text><text class="schedule-desc">敬酒、用餐、亲友致意</text></view>
           </view>
         </view>
@@ -151,8 +150,8 @@
             <view class="guide-meta">
               <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="guide-pill">{{tag}}</text>
             </view>
-            <view wx:if="{{item.hasNavigation}}" class="guide-actions">
-              <button type="button" data-query="{{item.query}}" data-provider="百度" bindtap="copyMapKeyword">导航</button>
+            <view wx:if="{{item.hasNavigation && item.location}}" class="guide-actions">
+              <button type="button" data-latitude="{{item.location.latitude}}" data-longitude="{{item.location.longitude}}" data-name="{{item.location.name}}" data-address="{{item.location.address}}" bindtap="openGuideLocation">导航</button>
             </view>
           </view>
         </scroll-view>

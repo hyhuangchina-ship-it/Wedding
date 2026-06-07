@@ -1055,7 +1055,7 @@
           <div class="venue-box">
             <img class="venue-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/hotel.jpg" alt="钻石大酒店水晶厅">
             <h3>福建省漳州市龙海区钻石大酒店 · 水晶厅</h3>
-            <p>2026 年 7 月 18 日 18:00。建议提前 30 分钟到达，现场以酒店指引为准。</p>
+            <p>2026 年 7 月 18 日 19:00。建议提前 30 分钟到达，现场以酒店指引为准。</p>
             <div class="map-row">
               <a href="https://map.baidu.com/poi/%E9%BE%99%E6%B5%B7%E9%92%BB%E7%9F%B3%E5%A4%A7%E9%85%92%E5%BA%97-%E5%9C%B0%E4%B8%8A%E5%81%9C%E8%BD%A6%E5%9C%BA/@13117524.646701362,2789188.456964983,20.38z?uid=3f57d4fadbd28cda9d95debc&amp;ugc_type=3&amp;ugc_ver=1&amp;device_ratio=1&amp;compat=1&amp;en_uid=3f57d4fadbd28cda9d95debc&amp;pcevaname=pc4.1&amp;querytype=detailConInfo&amp;da_src=shareurl" target="_blank" rel="noreferrer">百度地图</a>
               <a href="https://uri.amap.com/search?keyword=福建省漳州市龙海区钻石大酒店&city=漳州" target="_blank" rel="noreferrer">高德导航</a>
@@ -1531,12 +1531,28 @@
       }
     ];
 
+
+    const venueMapName = "\u798f\u5efa\u7701\u6f33\u5dde\u5e02\u9f99\u6d77\u533a\u94bb\u77f3\u5927\u9152\u5e97 \u6c34\u6676\u5385";
+
+    function baiduNavigationUrl(keyword) {
+      const params = new URLSearchParams({
+        origin: venueMapName,
+        destination: keyword,
+        mode: "driving",
+        region: "\u6f33\u5dde",
+        output: "html",
+        src: "wedding-invitation"
+      });
+      return `https://api.map.baidu.com/direction?${params.toString()}`;
+    }
+
     const normalizedGuideItems = guideItems.map((item) => {
       const isFood = item.category === "美食";
       return {
         ...item,
         category: isFood ? "美食" : "景点",
-        hasNavigation: !isFood
+        hasNavigation: !isFood,
+        navigationUrl: isFood ? "" : baiduNavigationUrl(item.query)
       };
     });
 
@@ -1563,9 +1579,6 @@
       return `https://uri.amap.com/search?keyword=${encodeURIComponent(keyword)}&city=${encodeURIComponent("漳州")}`;
     }
 
-    function baiduSearchUrl(keyword) {
-      return `https://map.baidu.com/search/${encodeURIComponent(keyword)}/`;
-    }
 
     function renderGuideFilters() {
       const filterWrap = document.querySelector("#guideFilters");
@@ -1599,7 +1612,7 @@
             ${item.tags.map((tag) => `<span class="guide-pill">${tag}</span>`).join("")}
           </div>
           ${item.hasNavigation ? `<div class="guide-actions">
-            <a href="${baiduSearchUrl(item.query)}" target="_blank" rel="noreferrer">导航</a>
+            <a href="${item.navigationUrl}" target="_blank" rel="noreferrer">导航</a>
           </div>` : ""}
         </article>`
       )).join("");

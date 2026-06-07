@@ -255,6 +255,81 @@ const guideItems = [
   }
 ];
 
+const guideLocations = {
+  "漳州 龙海 紫云公园": {
+    latitude: 24.4352,
+    longitude: 117.8252,
+    name: "紫云公园 / 紫云山",
+    address: "福建省漳州市龙海区紫云公园"
+  },
+  "漳州 龙海 月港古镇": {
+    latitude: 24.4389,
+    longitude: 117.8265,
+    name: "月港古镇",
+    address: "福建省漳州市龙海区海澄镇月港古镇"
+  },
+  "漳州 龙海 后港古街": {
+    latitude: 24.4447,
+    longitude: 117.8127,
+    name: "后港古街 / 石码老街",
+    address: "福建省漳州市龙海区石码镇后港古街"
+  },
+  "漳州 龙海 龙江颂景区": {
+    latitude: 24.4310,
+    longitude: 117.8786,
+    name: "龙江颂景区",
+    address: "福建省漳州市龙海区龙江颂景区"
+  },
+  "漳州 龙海 埭美古村": {
+    latitude: 24.4125,
+    longitude: 117.9398,
+    name: "埭美古村",
+    address: "福建省漳州市龙海区东园镇埭美古村"
+  },
+  "漳州 江东桥 虎渡桥": {
+    latitude: 24.5223,
+    longitude: 117.7550,
+    name: "江东桥 / 虎渡桥",
+    address: "福建省漳州市龙文区江东桥"
+  },
+  "漳州古城": {
+    latitude: 24.5108,
+    longitude: 117.6557,
+    name: "漳州古城",
+    address: "福建省漳州市芗城区漳州古城"
+  },
+  "漳州 云洞岩": {
+    latitude: 24.5735,
+    longitude: 117.7428,
+    name: "云洞岩",
+    address: "福建省漳州市龙文区云洞岩风景区"
+  },
+  "漳州 龙海 海澄都城隍庙": {
+    latitude: 24.4376,
+    longitude: 117.8274,
+    name: "海澄都城隍庙",
+    address: "福建省漳州市龙海区海澄都城隍庙"
+  },
+  "漳州 龙海 瑞竹岩": {
+    latitude: 24.5155,
+    longitude: 117.7637,
+    name: "瑞竹岩",
+    address: "福建省漳州市龙海区瑞竹岩"
+  },
+  "漳州 龙海 天一总局旧址": {
+    latitude: 24.5210,
+    longitude: 117.8736,
+    name: "天一总局旧址",
+    address: "福建省漳州市龙海区天一总局旧址"
+  },
+  "漳州 龙海 白礁慈济祖宫": {
+    latitude: 24.5212,
+    longitude: 117.9279,
+    name: "白礁慈济祖宫",
+    address: "福建省漳州市龙海区白礁慈济祖宫"
+  }
+};
+
 const normalizedGuideItems = guideItems.map((item) => {
   const isFood = item.category === "美食";
   return {
@@ -263,6 +338,7 @@ const normalizedGuideItems = guideItems.map((item) => {
     distance: item.distance,
     time: item.time,
     hasNavigation: !isFood,
+    location: isFood ? null : guideLocations[item.query],
     image: item.image || "",
     tags: item.tags,
     desc: item.desc,
@@ -522,6 +598,27 @@ Page({
       data: query,
       success: () => {
         wx.showToast({ title: "已复制，可在" + provider + "搜索", icon: "none" });
+      }
+    });
+  },
+
+  openGuideLocation(event) {
+    const { latitude, longitude, name, address } = event.currentTarget.dataset;
+    const lat = Number(latitude);
+    const lng = Number(longitude);
+    if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
+      wx.showToast({ title: "位置暂不可用", icon: "none" });
+      return;
+    }
+
+    wx.openLocation({
+      latitude: lat,
+      longitude: lng,
+      scale: 16,
+      name: name || "周边景点",
+      address: address || "",
+      fail: () => {
+        wx.showToast({ title: "地图暂不可用", icon: "none" });
       }
     });
   },
