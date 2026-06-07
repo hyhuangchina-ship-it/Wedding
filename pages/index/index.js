@@ -16,6 +16,11 @@ const galleryPhotos = [
   "/miniprogram-assets/gallery-07.jpg"
 ];
 
+const guideImages = {
+  scenic: "/miniprogram-assets/guide-scenic.png",
+  food: "/miniprogram-assets/guide-food.png"
+};
+
 const guideItems = [
   {
     name: "紫云公园 / 紫云山",
@@ -181,7 +186,16 @@ const guideItems = [
   }
 ];
 
-const guideCategories = ["全部", "景点", "古迹", "古街", "拍照", "美食"];
+const normalizedGuideItems = guideItems.map((item) => {
+  const isFood = item.category === "美食";
+  return {
+    ...item,
+    category: isFood ? "美食" : "景点",
+    image: isFood ? guideImages.food : guideImages.scenic
+  };
+});
+
+const guideCategories = ["景点", "美食"];
 const guideRoutes = [
   {
     name: "老城夜游",
@@ -231,16 +245,18 @@ Page({
     galleryIndex: 0,
     countdown: buildCountdown(),
     musicOn: false,
-    guideItems,
+    guideItems: normalizedGuideItems,
     guideCategories,
     guideRoutes,
-    activeCategory: "全部",
+    activeCategory: "景点",
     activeRoute: 0,
     currentRoute: guideRoutes[0],
-    searchKeyword: "",
-    filteredGuideItems: guideItems,
+    filteredGuideItems: normalizedGuideItems.filter((item) => item.category === "景点"),
     touchStartY: null,
-    touchStartX: null
+    touchStartX: null,
+    guideAtTop: true,
+    guideAtBottom: false,
+    guideGridHeight: 0
   },
 
   onLoad() {
@@ -254,6 +270,16 @@ Page({
     this.galleryTimer = setInterval(() => {
       this.setData({ galleryIndex: (this.data.galleryIndex + 1) % galleryPhotos.length });
     }, 3200);
+  },
+
+  onReady() {
+    wx.createSelectorQuery()
+      .in(this)
+      .select(".guide-grid")
+      .boundingClientRect((rect) => {
+        if (rect) this.setData({ guideGridHeight: rect.height });
+      })
+      .exec();
   },
 
   onUnload() {
@@ -299,7 +325,16 @@ Page({
     }
   },
 
+  isGuidePanelEvent(event) {
+    return Boolean(event.mark && event.mark.guidePanel);
+  },
+
   onTouchStart(event) {
+    if (this.isGuidePanelEvent(event)) {
+      this.setData({ touchStartY: null, touchStartX: null });
+      return;
+    }
+
     const touch = event.touches[0];
     this.setData({
       touchStartY: touch.clientY,
@@ -308,14 +343,32 @@ Page({
   },
 
   onTouchEnd(event) {
+    if (this.isGuidePanelEvent(event)) {
+      this.setData({ touchStartY: null, touchStartX: null });
+      return;
+    }
+
     if (this.data.touchStartY === null) return;
     const touch = event.changedTouches[0];
     const delta = this.data.touchStartY - touch.clientY;
-    const horizontalDelta = Math.abs(this.data.touchStartX - touch.clientX);
+    const horizontalDeltaValue = this.data.touchStartX - touch.clientX;
+    const horizontalDelta = Math.abs(horizontalDeltaValue);
+    const verticalDelta = Math.abs(delta);
 
     this.setData({ touchStartY: null, touchStartX: null });
 
-    if (Math.abs(delta) < 52 || Math.abs(delta) < horizontalDelta * 1.15) return;
+    if (horizontalDelta >= 52 && horizontalDelta > verticalDelta * 1.15) {
+      horizontalDeltaValue > 0 ? this.next() : this.previous();
+      return;
+    }
+
+    if (verticalDelta < 52 || verticalDelta < horizontalDelta * 1.15) return;
+
+    if (this.data.current === 2) {
+      if (delta > 0 && !this.data.guideAtBottom) return;
+      if (delta < 0 && !this.data.guideAtTop) return;
+    }
+
     if (delta > 0) {
       this.next();
     } else {
@@ -323,7 +376,12 @@ Page({
     }
   },
 
-  onTouchCancel() {
+  onTouchCancel(event) {
+    if (this.isGuidePanelEvent(event)) {
+      this.setData({ touchStartY: null, touchStartX: null });
+      return;
+    }
+
     this.setData({ touchStartY: null, touchStartX: null });
   },
 
@@ -356,20 +414,21 @@ Page({
 
   copyMapKeyword(event) {
     const query = event.currentTarget.dataset.query || "福建省漳州市龙海区钻石大酒店";
+    const provider = event.currentTarget.dataset.provider || "地图";
     wx.setClipboardData({
       data: query,
       success: () => {
-        wx.showToast({ title: "已复制地图关键词", icon: "none" });
+        wx.showToast({ title: `已复制，可在${provider}搜索`, icon: "none" });
       }
     });
   },
 
-  onSearchInput(event) {
-    this.setData({ searchKeyword: event.detail.value }, () => this.updateGuideList());
-  },
-
   setCategory(event) {
-    this.setData({ activeCategory: event.currentTarget.dataset.category }, () => this.updateGuideList());
+    this.setData({
+      activeCategory: event.currentTarget.dataset.category,
+      guideAtTop: true,
+      guideAtBottom: false
+    }, () => this.updateGuideList());
   },
 
   setRoute(event) {
@@ -381,14 +440,28 @@ Page({
   },
 
   updateGuideList() {
-    const keyword = this.data.searchKeyword.trim().toLowerCase();
     const activeCategory = this.data.activeCategory;
-    const filteredGuideItems = guideItems.filter((item) => {
-      const categoryMatch = activeCategory === "全部" || item.category === activeCategory;
-      const haystack = [item.name, item.category, item.distance, item.time, item.desc, ...item.tags].join(" ").toLowerCase();
-      return categoryMatch && haystack.includes(keyword);
+    const filteredGuideItems = normalizedGuideItems.filter((item) => {
+      return item.category === activeCategory;
     });
 
-    this.setData({ filteredGuideItems });
+    this.setData({ filteredGuideItems, guideAtTop: true, guideAtBottom: false });
+  },
+
+  onGuideScroll(event) {
+    const { scrollTop = 0, scrollHeight = 0 } = event.detail;
+    const viewportHeight = this.data.guideGridHeight || 1;
+    this.setData({
+      guideAtTop: scrollTop <= 4,
+      guideAtBottom: scrollTop + viewportHeight >= scrollHeight - 4
+    });
+  },
+
+  onGuideScrollUpper() {
+    this.setData({ guideAtTop: true, guideAtBottom: false });
+  },
+
+  onGuideScrollLower() {
+    this.setData({ guideAtTop: false, guideAtBottom: true });
   }
 });

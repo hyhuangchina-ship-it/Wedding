@@ -517,10 +517,12 @@
       position: relative;
       z-index: 1;
       display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
       min-height: 0;
+      flex: 1;
       gap: 10px;
-      overflow: auto;
-      padding: 0px 2px 58px;
+      overflow: hidden;
+      padding: 0 2px 10px;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
     }
@@ -542,19 +544,6 @@
       backdrop-filter: blur(18px);
     }
 
-    .search-box input {
-      width: 100%;
-      min-height: 42px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 0 14px;
-      color: var(--ink);
-      background: var(--white);
-      font: inherit;
-      font-size: 14px;
-      outline: none;
-    }
-
     .filter-row,
     .route-tabs {
       display: flex;
@@ -562,6 +551,7 @@
       overflow-x: auto;
       padding-bottom: 2px;
       scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
 
     .filter-row::-webkit-scrollbar,
@@ -573,6 +563,7 @@
     .route-tab {
       flex: 0 0 auto;
       min-height: 34px;
+      max-width: 100%;
       border: 1px solid var(--line);
       border-radius: 999px;
       padding: 0 12px;
@@ -580,6 +571,7 @@
       background: rgba(255, 255, 255, .62);
       font-size: 12px;
       font-weight: 800;
+      line-height: 1.2;
       cursor: pointer;
     }
 
@@ -637,6 +629,15 @@
     .guide-grid {
       display: grid;
       gap: 10px;
+      min-height: 0;
+      overflow-y: auto;
+      padding-bottom: 52px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .guide-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .guide-card {
@@ -646,6 +647,13 @@
       border-radius: 8px;
       padding: 12px;
       background: rgba(255, 255, 255, .62);
+    }
+
+    .guide-photo {
+      width: 100%;
+      height: 112px;
+      border-radius: 7px;
+      object-fit: cover;
     }
 
     .guide-meta {
@@ -674,13 +682,15 @@
 
     .guide-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 8px;
     }
 
     .guide-actions a,
     .route-link {
       display: inline-flex;
+      width: 100%;
+      min-width: 0;
       min-height: 36px;
       align-items: center;
       justify-content: center;
@@ -690,7 +700,11 @@
       background: var(--white);
       font-size: 12px;
       font-weight: 800;
+      line-height: 1.2;
+      padding: 0 10px;
+      text-align: center;
       text-decoration: none;
+      white-space: normal;
     }
 
     .route-link {
@@ -1029,7 +1043,6 @@
 
         <div class="guide-panel reveal" data-stop-swipe>
           <div class="search-box">
-            <input id="guideSearch" type="search" placeholder="搜索景点、美食、古街、海鲜..." aria-label="搜索周边攻略">
             <div class="filter-row" id="guideFilters" aria-label="攻略分类"></div>
           </div>
 
@@ -1100,6 +1113,7 @@
     let locked = false;
     let startY = 0;
     let startX = 0;
+    let touchStartTarget = null;
 
     slides.forEach((_, slideIndex) => {
       const dot = document.createElement("button");
@@ -1148,15 +1162,18 @@
     window.addEventListener("keydown", (event) => {
       if (event.key === "ArrowDown" || event.key === "PageDown") next();
       if (event.key === "ArrowUp" || event.key === "PageUp") previous();
+      if (event.key === "ArrowRight") next();
+      if (event.key === "ArrowLeft") previous();
     });
 
     window.addEventListener("wheel", (event) => {
-      if (event.target.closest("[data-stop-swipe]")) return;
       if (Math.abs(event.deltaY) < 24) return;
+      if (event.target.closest("[data-stop-swipe]")) return;
       event.deltaY > 0 ? next() : previous();
     }, { passive: true });
 
     window.addEventListener("touchstart", (event) => {
+      touchStartTarget = event.target;
       if (event.target.closest("[data-stop-swipe]")) {
         startY = null;
         startX = null;
@@ -1167,18 +1184,30 @@
     }, { passive: true });
 
     window.addEventListener("touchend", (event) => {
-      if (startY === null || event.target.closest("[data-stop-swipe]")) return;
+      if (startY === null) return;
       const endY = event.changedTouches[0].clientY;
       const endX = event.changedTouches[0].clientX;
       const delta = startY - endY;
-      const horizontalDelta = Math.abs(startX - endX);
-      if (Math.abs(delta) < 52 || Math.abs(delta) < horizontalDelta * 1.15) return;
+      const horizontalDeltaValue = startX - endX;
+      const horizontalDelta = Math.abs(horizontalDeltaValue);
+      const verticalDelta = Math.abs(delta);
+      const target = touchStartTarget || event.target;
+      touchStartTarget = null;
+      if (target.closest?.("[data-stop-swipe]")) return;
+
+      if (horizontalDelta >= 52 && horizontalDelta > verticalDelta * 1.15) {
+        horizontalDeltaValue > 0 ? next() : previous();
+        return;
+      }
+
+      if (verticalDelta < 52 || verticalDelta < horizontalDelta * 1.15) return;
       delta > 0 ? next() : previous();
     }, { passive: true });
 
     window.addEventListener("touchcancel", () => {
       startY = null;
       startX = null;
+      touchStartTarget = null;
     }, { passive: true });
 
     function autoPlayCarousel(selector, intervalMs) {
@@ -1256,7 +1285,7 @@
         distance: "18-22km",
         time: "下午 / 晚上",
         tags: ["压线点", "古城", "小吃"],
-        desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中；严格 20km 时可作为边界备选。",
+        desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中。",
         query: "漳州古城"
       },
       {
@@ -1360,35 +1389,37 @@
       }
     ];
 
-    const guideCategories = ["全部", "景点", "古迹", "古街", "拍照", "美食"];
+    const guideImages = {
+      scenic: "assets/guide-scenic.png",
+      food: "assets/guide-food.png"
+    };
+
+    const normalizedGuideItems = guideItems.map((item) => {
+      const isFood = item.category === "美食";
+      return {
+        ...item,
+        category: isFood ? "美食" : "景点",
+        image: isFood ? guideImages.food : guideImages.scenic
+      };
+    });
+
+    const guideCategories = ["景点", "美食"];
     const guideRoutes = [
       {
         name: "老城夜游",
-        points: ["钻石大酒店", "后港古街", "石码老街", "五香 / 卤面"],
+        points: ["后港古街", "石码老街", "五香 / 卤面"],
         desc: "适合 7 月晚上，距离短、吃得集中，亲友自由度最高。",
         query: "龙海钻石大酒店 到 后港古街 石码老街"
       },
       {
-        name: "海丝古港",
-        points: ["钻石大酒店", "月港古镇", "龙江颂景区", "海鲜排档"],
+        name: "月港古镇",
+        points: ["海丝古港" ,"海鲜排档"],
         desc: "人文和江景都兼顾，建议傍晚走，避开正午高温。",
         query: "龙海钻石大酒店 到 月港古镇 龙江颂景区"
-      },
-      {
-        name: "古厝拍照",
-        points: ["钻石大酒店", "埭美古村", "江东桥", "石码夜宵"],
-        desc: "适合自驾或打车，主打闽南红砖古厝和历史古桥。",
-        query: "龙海钻石大酒店 到 埭美古村 江东桥"
-      },
-      {
-        name: "漳州延伸",
-        points: ["钻石大酒店", "南山寺", "漳州古城", "古城小吃"],
-        desc: "更偏主城游，部分点位在 20km 边界，时间充裕再选。",
-        query: "龙海钻石大酒店 到 漳州古城 南山寺"
       }
     ];
 
-    let activeCategory = "全部";
+    let activeCategory = "景点";
     let activeRoute = 0;
 
     function amapSearchUrl(keyword) {
@@ -1408,11 +1439,8 @@
 
     function renderGuideList() {
       const list = document.querySelector("#guideList");
-      const search = document.querySelector("#guideSearch").value.trim().toLowerCase();
-      const filtered = guideItems.filter((item) => {
-        const categoryMatch = activeCategory === "全部" || item.category === activeCategory;
-        const haystack = [item.name, item.category, item.distance, item.time, item.desc, ...item.tags].join(" ").toLowerCase();
-        return categoryMatch && haystack.includes(search);
+      const filtered = normalizedGuideItems.filter((item) => {
+        return item.category === activeCategory;
       });
 
       if (!filtered.length) {
@@ -1422,6 +1450,7 @@
 
       list.innerHTML = filtered.map((item) => (
         `<article class="guide-card">
+          <img class="guide-photo" src="${item.image}" alt="${item.category}推荐">
           <div class="guide-meta">
             <span class="guide-pill">${item.category}</span>
             <span class="guide-pill distance">${item.distance}</span>
@@ -1457,15 +1486,14 @@
     }
 
     function initTravelGuide() {
-      const search = document.querySelector("#guideSearch");
-      if (!search) return;
+      const filterWrap = document.querySelector("#guideFilters");
+      if (!filterWrap) return;
 
       renderGuideFilters();
       renderRoutes();
       renderGuideList();
 
-      search.addEventListener("input", renderGuideList);
-      document.querySelector("#guideFilters").addEventListener("click", (event) => {
+      filterWrap.addEventListener("click", (event) => {
         const button = event.target.closest("[data-category]");
         if (!button) return;
         activeCategory = button.dataset.category;

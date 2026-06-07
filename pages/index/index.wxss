@@ -408,10 +408,10 @@
 .guide-actions button,
 .route-link {
   display: flex;
-  width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  min-height: 32px;
+  height: 34px;
+  min-height: 34px;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(57, 47, 38, 0.16);
@@ -420,10 +420,15 @@
   color: #2d2925;
   font-size: 11px;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 34px;
   padding: 0 8px;
   text-align: center;
-  white-space: normal;
+  white-space: nowrap;
+}
+
+.map-row button,
+.route-link {
+  width: 100%;
 }
 
 .map-row .map-primary {
@@ -473,6 +478,8 @@
 
 .travel-content {
   gap: 10px;
+  justify-content: flex-start;
+  overflow: hidden;
   padding-bottom: 20px;
 }
 
@@ -490,39 +497,38 @@
   padding: 10px;
 }
 
-.guide-search {
-  width: 100%;
-  height: 36px;
-  border: 1px solid rgba(57, 47, 38, 0.16);
-  border-radius: 999px;
-  padding: 0 12px;
-  background: #fffaf2;
-  color: #2d2925;
-  font-size: 12px;
-}
-
 .filter-row,
 .route-tabs {
   display: flex;
   width: 100%;
-  margin-top: 8px;
   white-space: nowrap;
+}
+
+.route-tabs {
+  margin-top: 8px;
 }
 
 .filter-chip,
 .route-tab {
   display: inline-flex;
-  min-height: 28px;
+  width: auto;
+  min-width: 0;
+  flex-shrink: 0;
+  max-width: 118px;
+  height: 30px;
+  min-height: 30px;
   align-items: center;
   justify-content: center;
   margin-right: 8px;
   border: 1px solid rgba(57, 47, 38, 0.16);
   border-radius: 999px;
-  padding: 0 10px;
+  padding: 0 12px;
   background: #fffaf2;
   color: #756a61;
   font-size: 11px;
   font-weight: 800;
+  line-height: 30px;
+  white-space: nowrap;
 }
 
 .filter-chip.active,
@@ -572,8 +578,10 @@
 }
 
 .guide-grid {
+  height: 0;
   min-height: 0;
   flex: 1;
+  padding-bottom: 10px;
 }
 
 .empty-guide {
@@ -586,6 +594,14 @@
 .guide-card {
   margin-bottom: 8px;
   padding: 10px;
+}
+
+.guide-photo {
+  display: block;
+  width: 100%;
+  height: 92px;
+  margin-bottom: 9px;
+  border-radius: 6px;
 }
 
 .guide-meta {
@@ -626,7 +642,15 @@
 }
 
 .guide-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  width: 100%;
   margin-top: 8px;
+}
+
+.guide-actions button {
+  width: 100%;
 }
 
 .gallery-content {
