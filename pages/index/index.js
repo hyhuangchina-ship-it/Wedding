@@ -144,6 +144,16 @@ const guideItems = [
     image: guideImage("baijiaocijizugong.png")
   },
   {
+    name: "龙海港尾火山口（海底兵马俑）",
+    category: "景点",
+    distance: "35-45km",
+    time: "上午 / 下午",
+    tags: ["滨海火山", "地质奇观", "自驾延伸"],
+    desc: "牛头山古火山口有海底火山喷发遗迹和柱状玄武岩景观，距离较远，适合有车亲友作为半日延伸点。",
+    query: "漳州 龙海 港尾 牛头山古火山口",
+    image: guideImage("huoshankou.jpeg")
+  },
+  {
     name: "石码五香",
     category: "美食",
     distance: "4-6km",
@@ -327,6 +337,12 @@ const guideLocations = {
     longitude: 117.9279,
     name: "白礁慈济祖宫",
     address: "福建省漳州市龙海区白礁慈济祖宫"
+  },
+  "漳州 龙海 港尾 牛头山古火山口": {
+    latitude: 24.2568,
+    longitude: 118.0796,
+    name: "龙海港尾火山口（海底兵马俑）",
+    address: "福建省漳州市龙海区港尾镇牛头山古火山口"
   }
 };
 

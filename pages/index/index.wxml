@@ -125,7 +125,10 @@
     <view class="content travel-content">
       <view class="travel-head">
         <text class="kicker reveal">Travel Guide</text>
-        <text class="section-title reveal">周边逛吃推荐</text>
+        <view class="travel-title-row">
+          <text class="section-title reveal">周边逛吃推荐</text>
+          <button class="home-shortcut reveal" type="button" data-index="0" bindtap="goTo">返回首页</button>
+        </view>
         <text class="lead reveal">以婚礼酒店为中心，我们整理了适合顺路逛吃的目的地清单，供您参考。</text>
       </view>
 

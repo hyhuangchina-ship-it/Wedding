@@ -500,6 +500,30 @@
       z-index: 1;
     }
 
+    .travel-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .home-shortcut {
+      display: inline-flex;
+      flex: 0 0 auto;
+      min-height: 34px;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      border: 1px solid rgba(57, 47, 38, .18);
+      border-radius: 999px;
+      padding: 0 12px;
+      color: var(--ink);
+      background: rgba(255, 250, 242, .86);
+      font-size: 12px;
+      font-weight: 900;
+      box-shadow: 0 8px 20px rgba(50, 39, 31, .12);
+    }
+
     .travel .section-title {
       font-size: clamp(30px, 8vw, 38px);
       line-height: 1.08;
@@ -906,21 +930,25 @@
       top: 50%;
       z-index: 30;
       display: grid;
-      gap: 8px;
+      gap: 10px;
       transform: translateY(-50%);
     }
 
     .dot {
-      width: 7px;
-      height: 7px;
-      border: 0;
+      box-sizing: border-box;
+      width: 10px;
+      height: 10px;
+      border: 1px solid rgba(255, 250, 242, .82);
       border-radius: 999px;
-      background: rgba(45, 41, 37, .28);
+      padding: 0;
+      background: rgba(45, 41, 37, .46);
+      box-shadow: 0 2px 8px rgba(24, 19, 16, .25);
       cursor: pointer;
     }
 
     .dot.active {
-      height: 20px;
+      height: 22px;
+      border-color: rgba(255, 250, 242, .96);
       background: var(--gold);
     }
 
@@ -1133,7 +1161,10 @@
       <div class="content">
         <div class="travel-head">
           <p class="kicker reveal">Travel Guide</p>
-          <h2 class="section-title reveal">周边逛吃推荐</h2>
+          <div class="travel-title-row">
+            <h2 class="section-title reveal">周边逛吃推荐</h2>
+            <button class="home-shortcut reveal" type="button" data-goto="0">返回首页</button>
+          </div>
           <p class="lead reveal">以婚礼酒店为中心，我们整理了近期适合顺路逛吃的目的地清单，供您参考。</p>
         </div>
 
@@ -1416,6 +1447,15 @@
         desc: "保生大帝信俗的重要祖宫，建筑和闽台文化辨识度高，距离稍远，建议有车亲友单独安排。",
         query: "漳州 龙海 白礁慈济祖宫",
         image: guideImage("cijizugong.jpg")
+      },
+      {
+        name: "龙海港尾火山口（海底兵马俑）",
+        category: "景点",
+        distance: "35-45km",
+        time: "上午 / 下午",
+        tags: ["滨海火山", "地质奇观", "自驾延伸"],
+        desc: "牛头山古火山口有海底火山喷发遗迹和柱状玄武岩景观，距离较远，适合有车亲友作为半日延伸点。",
+        query: "漳州 龙海 港尾 牛头山古火山口"
       },
       {
         name: "石码五香",
