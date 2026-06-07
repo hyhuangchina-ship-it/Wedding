@@ -71,7 +71,7 @@
 
         <view class="schedule-list">
           <view class="schedule-item">
-            <text class="schedule-time">17:30</text>
+            <text class="schedule-time">17:45</text>
             <view><text class="schedule-title">宾客入场</text><text class="schedule-desc">签到、合影、入席</text></view>
           </view>
           <view class="schedule-item">
@@ -102,20 +102,6 @@
           <scroll-view class="filter-row" scroll-x enhanced show-scrollbar="{{false}}">
             <button wx:for="{{guideCategories}}" wx:key="*this" class="filter-chip {{item === activeCategory ? 'active' : ''}}" type="button" data-category="{{item}}" bindtap="setCategory">{{item}}</button>
           </scroll-view>
-        </view>
-
-        <view class="route-view">
-          <scroll-view class="route-tabs" scroll-x enhanced show-scrollbar="{{false}}">
-            <button wx:for="{{guideRoutes}}" wx:key="name" wx:for-index="routeIndex" class="route-tab {{routeIndex === activeRoute ? 'active' : ''}}" type="button" data-index="{{routeIndex}}" bindtap="setRoute">{{item.name}}</button>
-          </scroll-view>
-          <view class="route-detail">
-            <text class="route-title">{{currentRoute.name}}</text>
-            <view class="route-line">
-              <text wx:for="{{currentRoute.points}}" wx:key="*this" class="route-point">{{item}}</text>
-            </view>
-            <text class="route-desc">{{currentRoute.desc}}</text>
-            <button class="route-link" type="button" data-query="{{currentRoute.query}}" data-provider="高德" bindtap="copyMapKeyword">打开高德查看路线</button>
-          </view>
         </view>
 
         <scroll-view class="guide-grid" scroll-y enhanced enable-flex="{{true}}" show-scrollbar="{{false}}" bindscroll="onGuideScroll" bindscrolltoupper="onGuideScrollUpper" bindscrolltolower="onGuideScrollLower">

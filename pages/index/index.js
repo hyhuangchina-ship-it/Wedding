@@ -271,6 +271,9 @@ Page({
     this.galleryTimer = setInterval(() => {
       this.setData({ galleryIndex: (this.data.galleryIndex + 1) % galleryPhotos.length });
     }, 3200);
+    this.musicTimer = setTimeout(() => {
+      this.toggleMusic();
+    }, 500);
   },
 
   onReady() {
@@ -287,6 +290,7 @@ Page({
     clearInterval(this.countdownTimer);
     clearInterval(this.heroTimer);
     clearInterval(this.galleryTimer);
+    clearTimeout(this.musicTimer);
     if (this.audio) {
       this.audio.destroy();
       this.audio = null;
