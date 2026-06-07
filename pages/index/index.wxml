@@ -121,7 +121,6 @@
         <scroll-view class="guide-grid" scroll-y enhanced enable-flex="{{true}}" show-scrollbar="{{false}}" bindscroll="onGuideScroll" bindscrolltoupper="onGuideScrollUpper" bindscrolltolower="onGuideScrollLower">
           <view wx:if="{{!filteredGuideItems.length}}" class="empty-guide">没有找到匹配内容，换个关键词试试。</view>
           <view wx:for="{{filteredGuideItems}}" wx:key="name" class="guide-card">
-            <image class="guide-photo" src="{{item.image}}" mode="aspectFill" />
             <view class="guide-meta">
               <text class="guide-pill">{{item.category}}</text>
               <text class="guide-pill distance">{{item.distance}}</text>

@@ -16,11 +16,6 @@ const galleryPhotos = [
   "/miniprogram-assets/gallery-07.jpg"
 ];
 
-const guideImages = {
-  scenic: "/miniprogram-assets/guide-scenic.png",
-  food: "/miniprogram-assets/guide-food.png"
-};
-
 const guideItems = [
   {
     name: "紫云公园 / 紫云山",
@@ -190,8 +185,7 @@ const normalizedGuideItems = guideItems.map((item) => {
   const isFood = item.category === "美食";
   return {
     ...item,
-    category: isFood ? "美食" : "景点",
-    image: isFood ? guideImages.food : guideImages.scenic
+    category: isFood ? "美食" : "景点"
   };
 });
 
