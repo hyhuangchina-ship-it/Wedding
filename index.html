@@ -39,6 +39,7 @@
 
     button {
       font: inherit;
+      margin: 0;
     }
 
     .app {
@@ -142,6 +143,11 @@
       position: relative;
     }
 
+    .wedding-info .content {
+      justify-content: flex-start;
+      gap: 14px;
+    }
+
     .kicker {
       margin: 0 0 10px;
       color: var(--gold);
@@ -229,11 +235,14 @@
 
     .icon-button {
       display: grid;
-      width: 42px;
-      height: 42px;
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      min-width: 34px;
       place-items: center;
       border: 1px solid rgba(255, 250, 242, .72);
       border-radius: 999px;
+      padding: 0;
       color: inherit;
       background: rgba(255, 255, 255, .14);
       cursor: pointer;
@@ -241,15 +250,15 @@
     }
 
     .icon-button svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       stroke-width: 1.8;
     }
 
     .hero-names {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(50px, 18vw, 50px);
+      font-size: clamp(40px, 18vw, 40px);
       font-weight: 400;
       line-height: .9;
       letter-spacing: 0;
@@ -303,6 +312,10 @@
       display: grid;
       gap: 10px;
       margin-top: 14px;
+    }
+
+    .wedding-info .info-stack {
+      margin-top: 0;
     }
 
     .countdown {
@@ -396,12 +409,14 @@
 
     .map-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 10px;
     }
 
     .map-row a {
       display: inline-flex;
+      width: 100%;
+      min-width: 0;
       min-height: 40px;
       align-items: center;
       justify-content: center;
@@ -411,7 +426,9 @@
       background: var(--white);
       font-size: 13px;
       font-weight: 800;
+      line-height: 1.2;
       text-decoration: none;
+      white-space: normal;
     }
 
     .schedule-list {
@@ -911,12 +928,12 @@
 </head>
 <body>
   <audio id="bgm" src="assets/bgm.mp3" preload="auto" loop></audio>
-  <main class="app" aria-label="轻法式婚礼电子请柬">
+  <main class="app" aria-label="婚礼电子请柬">
     <section class="slide active light" aria-label="封面">
       <div class="bg-carousel" data-carousel="hero">
-        <img class="bg-photo active" src="assets/1.jpg" alt="黄洪逸和庞璐婚纱照一">
-        <img class="bg-photo" src="assets/2.jpg" alt="黄洪逸和庞璐婚纱照二">
-        <img class="bg-photo" src="assets/3.jpg" alt="黄洪逸和庞璐婚纱照三">
+        <img class="bg-photo active" src="assets/1.jpg" alt="婚纱照一">
+        <img class="bg-photo" src="assets/2.jpg" alt="婚纱照二">
+        <img class="bg-photo" src="assets/3.jpg" alt="婚纱照三">
       </div>
       <div class="veil"></div>
       <div class="content">
@@ -944,7 +961,7 @@
       </div>
     </section>
 
-    <section class="slide cream" aria-label="邀请与地点">
+    <section class="slide cream wedding-info" aria-label="邀请与地点">
       <div class="content">
         <div>
           <p class="kicker reveal">Invitation</p>
@@ -1030,25 +1047,25 @@
       <div class="content">
         <div class="gallery reveal" data-carousel="gallery">
           <div class="gallery-frame active" style="--photo: url('assets/gallery-01.jpg')">
-            <img src="assets/gallery-01.jpg" alt="黄洪逸和庞璐婚纱照四">
+            <img src="assets/gallery-01.jpg" alt="婚纱照四">
           </div>
           <div class="gallery-frame" style="--photo: url('assets/gallery-02.jpg')">
-            <img src="assets/gallery-02.jpg" alt="黄洪逸和庞璐婚纱照五">
+            <img src="assets/gallery-02.jpg" alt="婚纱照五">
           </div>
           <div class="gallery-frame" style="--photo: url('assets/gallery-03.jpg')">
-            <img src="assets/gallery-03.jpg" alt="黄洪逸和庞璐婚纱照六">
+            <img src="assets/gallery-03.jpg" alt="婚纱照六">
           </div>
           <div class="gallery-frame" style="--photo: url('assets/gallery-04.jpg')">
-            <img src="assets/gallery-04.jpg" alt="黄洪逸和庞璐婚纱照七">
+            <img src="assets/gallery-04.jpg" alt="婚纱照七">
           </div>
           <div class="gallery-frame" style="--photo: url('assets/gallery-05.jpg')">
-            <img src="assets/gallery-05.jpg" alt="黄洪逸和庞璐婚纱照八">
+            <img src="assets/gallery-05.jpg" alt="婚纱照八">
           </div>
           <div class="gallery-frame" style="--photo: url('assets/gallery-06.jpg')">
-            <img src="assets/gallery-06.jpg" alt="黄洪逸和庞璐婚纱照九">
+            <img src="assets/gallery-06.jpg" alt="婚纱照九">
           </div>
           <div class="gallery-frame" style="--photo: url('assets/gallery-07.jpg')">
-            <img src="assets/gallery-07.jpg" alt="黄洪逸和庞璐婚纱照十">
+            <img src="assets/gallery-07.jpg" alt="婚纱照十">
           </div>
         </div>
       </div>
