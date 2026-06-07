@@ -27,7 +27,7 @@
   </view>
 
   <view class="slide cream wedding-info {{current === 1 ? 'active' : ''}} {{current > 1 ? 'prev' : ''}}">
-    <image class="cream-bg" src="/miniprogram-assets/bg-soft.jpg" mode="aspectFill" />
+    <image class="cream-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg" mode="aspectFill" />
     <view class="cream-wash"></view>
     <view class="content">
       <view>
@@ -60,7 +60,7 @@
         </view>
 
         <view class="venue-box">
-          <image class="venue-photo" src="/miniprogram-assets/hotel.jpg" mode="aspectFill" />
+          <image class="venue-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/hotel.jpg" mode="aspectFill" />
           <text class="venue-title">福建省漳州市龙海区钻石大酒店 · 水晶厅</text>
           <text class="venue-desc">2026 年 7 月 18 日 18:00。建议提前 30 分钟到达，现场以酒店指引为准。</text>
           <view class="map-row">
@@ -88,7 +88,7 @@
   </view>
 
   <view class="slide cream travel {{current === 2 ? 'active' : ''}} {{current > 2 ? 'prev' : ''}}">
-    <image class="cream-bg" src="/miniprogram-assets/bg-soft.jpg" mode="aspectFill" />
+    <image class="cream-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg" mode="aspectFill" />
     <view class="cream-wash"></view>
     <view class="content travel-content">
       <view class="travel-head">
@@ -142,7 +142,7 @@
   </view>
 
   <view class="slide cream gallery-only {{current === 3 ? 'active' : ''}} {{current > 3 ? 'prev' : ''}}">
-    <image class="cream-bg" src="/miniprogram-assets/bg-soft.jpg" mode="aspectFill" />
+    <image class="cream-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg" mode="aspectFill" />
     <view class="cream-wash"></view>
     <view class="content gallery-content">
       <view class="gallery reveal">
@@ -154,7 +154,7 @@
   </view>
 
   <view class="slide light thanks {{current === 4 ? 'active' : ''}} {{current > 4 ? 'prev' : ''}}">
-    <image class="photo-bg" src="/miniprogram-assets/place2.jpg" mode="aspectFill" />
+    <image class="photo-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/place2.jpg" mode="aspectFill" />
     <view class="veil"></view>
     <view class="content">
       <text class="chip reveal">See You Soon</text>

@@ -1,19 +1,21 @@
 const weddingDate = new Date("2026-07-18T18:00:00+08:00").getTime();
 
+const IMAGE_BASE = "https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com";
+
 const heroPhotos = [
-  "/miniprogram-assets/1.jpg",
-  "/miniprogram-assets/2.jpg",
-  "/miniprogram-assets/3.jpg"
+  IMAGE_BASE + "/1.jpg",
+  IMAGE_BASE + "/2.jpg",
+  IMAGE_BASE + "/3.jpg"
 ];
 
 const galleryPhotos = [
-  "/miniprogram-assets/gallery-01.jpg",
-  "/miniprogram-assets/gallery-02.jpg",
-  "/miniprogram-assets/gallery-03.jpg",
-  "/miniprogram-assets/gallery-04.jpg",
-  "/miniprogram-assets/gallery-05.jpg",
-  "/miniprogram-assets/gallery-06.jpg",
-  "/miniprogram-assets/gallery-07.jpg"
+  IMAGE_BASE + "/gallery-01.jpg",
+  IMAGE_BASE + "/gallery-02.jpg",
+  IMAGE_BASE + "/gallery-03.jpg",
+  IMAGE_BASE + "/gallery-04.jpg",
+  IMAGE_BASE + "/gallery-05.jpg",
+  IMAGE_BASE + "/gallery-06.jpg",
+  IMAGE_BASE + "/gallery-07.jpg"
 ];
 
 const guideItems = [
@@ -184,8 +186,13 @@ const guideItems = [
 const normalizedGuideItems = guideItems.map((item) => {
   const isFood = item.category === "美食";
   return {
-    ...item,
-    category: isFood ? "美食" : "景点"
+    name: item.name,
+    category: isFood ? "美食" : "景点",
+    distance: item.distance,
+    time: item.time,
+    tags: item.tags,
+    desc: item.desc,
+    query: item.query
   };
 });
 
@@ -412,7 +419,7 @@ Page({
     wx.setClipboardData({
       data: query,
       success: () => {
-        wx.showToast({ title: `已复制，可在${provider}搜索`, icon: "none" });
+        wx.showToast({ title: "已复制，可在" + provider + "搜索", icon: "none" });
       }
     });
   },
@@ -443,7 +450,8 @@ Page({
   },
 
   onGuideScroll(event) {
-    const { scrollTop = 0, scrollHeight = 0 } = event.detail;
+    const scrollTop = event.detail.scrollTop || 0;
+    const scrollHeight = event.detail.scrollHeight || 0;
     const viewportHeight = this.data.guideGridHeight || 1;
     this.setData({
       guideAtTop: scrollTop <= 4,

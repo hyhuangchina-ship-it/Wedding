@@ -34,7 +34,7 @@
       color: var(--ink);
       background:
         linear-gradient(120deg, rgba(255, 249, 239, .88), rgba(235, 224, 209, .74)),
-        url("assets/bg-cover.jpg") center / cover;
+        url("https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-cover.jpg") center / cover;
     }
 
     button {
@@ -129,7 +129,7 @@
     .cream {
       background:
         linear-gradient(180deg, rgba(255, 249, 239, .96), rgba(244, 235, 222, .94)),
-        url("assets/bg-soft.jpg") center / cover;
+        url("https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg") center / cover;
     }
 
     .cream::before {
@@ -205,14 +205,22 @@
       grid-template-columns: 1fr 1fr;
       gap: 10px;
       margin-top: 22px;
+      width: 100%;
+      min-width: 0;
     }
 
     .button-row.three {
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      padding-inline: 12px;
+    }
+
+    .button-row.three .button:first-child {
+      grid-column: 1 / -1;
     }
 
     .button {
       display: inline-flex;
+      min-width: 0;
       min-height: 44px;
       align-items: center;
       justify-content: center;
@@ -253,6 +261,18 @@
       width: 16px;
       height: 16px;
       stroke-width: 1.8;
+      transform-origin: center;
+      transition: transform .28s ease;
+    }
+
+    .icon-button.music-on svg {
+      animation: music-spin 3.6s linear infinite;
+    }
+
+    @keyframes music-spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .hero-names {
@@ -629,6 +649,7 @@
     .guide-grid {
       display: grid;
       gap: 10px;
+      height: 100%;
       min-height: 0;
       overflow-y: auto;
       padding-bottom: 52px;
@@ -938,9 +959,9 @@
   <main class="app" aria-label="婚礼电子请柬">
     <section class="slide active light" aria-label="封面">
       <div class="bg-carousel" data-carousel="hero">
-        <img class="bg-photo active" src="assets/1.jpg" alt="婚纱照一">
-        <img class="bg-photo" src="assets/2.jpg" alt="婚纱照二">
-        <img class="bg-photo" src="assets/3.jpg" alt="婚纱照三">
+        <img class="bg-photo active" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/1.jpg" alt="婚纱照一">
+        <img class="bg-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/2.jpg" alt="婚纱照二">
+        <img class="bg-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/3.jpg" alt="婚纱照三">
       </div>
       <div class="veil"></div>
       <div class="content">
@@ -999,7 +1020,7 @@
             <div class="timebox"><strong id="seconds">--</strong><span>秒</span></div>
           </div>
           <div class="venue-box">
-            <img class="venue-photo" src="assets/hotel.jpg" alt="钻石大酒店水晶厅">
+            <img class="venue-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/hotel.jpg" alt="钻石大酒店水晶厅">
             <h3>福建省漳州市龙海区钻石大酒店 · 水晶厅</h3>
             <p>2026 年 7 月 18 日 18:00。建议提前 30 分钟到达，现场以酒店指引为准。</p>
             <div class="map-row">
@@ -1052,33 +1073,33 @@
     <section class="slide cream gallery-only" aria-label="相册">
       <div class="content">
         <div class="gallery reveal" data-carousel="gallery">
-          <div class="gallery-frame active" style="--photo: url('assets/gallery-01.jpg')">
-            <img src="assets/gallery-01.jpg" alt="婚纱照四">
+          <div class="gallery-frame active" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-01.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-01.jpg" alt="婚纱照四">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/gallery-02.jpg')">
-            <img src="assets/gallery-02.jpg" alt="婚纱照五">
+          <div class="gallery-frame" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-02.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-02.jpg" alt="婚纱照五">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/gallery-03.jpg')">
-            <img src="assets/gallery-03.jpg" alt="婚纱照六">
+          <div class="gallery-frame" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-03.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-03.jpg" alt="婚纱照六">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/gallery-04.jpg')">
-            <img src="assets/gallery-04.jpg" alt="婚纱照七">
+          <div class="gallery-frame" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-04.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-04.jpg" alt="婚纱照七">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/gallery-05.jpg')">
-            <img src="assets/gallery-05.jpg" alt="婚纱照八">
+          <div class="gallery-frame" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-05.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-05.jpg" alt="婚纱照八">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/gallery-06.jpg')">
-            <img src="assets/gallery-06.jpg" alt="婚纱照九">
+          <div class="gallery-frame" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-06.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-06.jpg" alt="婚纱照九">
           </div>
-          <div class="gallery-frame" style="--photo: url('assets/gallery-07.jpg')">
-            <img src="assets/gallery-07.jpg" alt="婚纱照十">
+          <div class="gallery-frame" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-07.jpg')">
+            <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-07.jpg" alt="婚纱照十">
           </div>
         </div>
       </div>
     </section>
 
     <section class="slide light thanks" aria-label="结尾感谢">
-      <img class="photo-bg" src="assets/place2.jpg" alt="钻石大酒店水晶厅">
+      <img class="photo-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/place2.jpg" alt="钻石大酒店水晶厅">
       <div class="veil"></div>
       <div class="content">
         <span class="chip reveal">See You Soon</span>
@@ -1513,11 +1534,12 @@
 
     const musicButton = document.querySelector("#musicButton");
     const bgm = document.querySelector("#bgm");
-    let musicOn = false;
+    let musicOn = true;
 
     function renderMusicButton() {
       musicButton.style.background = musicOn ? "#fffaf2" : "rgba(255, 255, 255, .14)";
       musicButton.style.color = musicOn ? "#2d2925" : "#fffaf2";
+      musicButton.classList.toggle("music-on", musicOn);
       musicButton.setAttribute("aria-label", musicOn ? "关闭音乐" : "开启音乐");
     }
 

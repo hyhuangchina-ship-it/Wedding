@@ -38,6 +38,7 @@
         "value": "assets",
         "type": "folder"
       },
+
       {
         "value": "index.html",
         "type": "file"
