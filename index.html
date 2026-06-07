@@ -214,6 +214,10 @@
       padding-inline: 12px;
     }
 
+    .hero-copy .button-row.three {
+      padding-bottom: max(34px, env(safe-area-inset-bottom));
+    }
+
     .button-row.three .button:first-child {
       grid-column: 1 / -1;
     }
@@ -670,6 +674,15 @@
       background: rgba(255, 255, 255, .62);
     }
 
+    .guide-photo {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 6px;
+      background: rgba(135, 144, 122, .12);
+      object-fit: cover;
+    }
+
     .guide-meta {
       display: flex;
       flex-wrap: wrap;
@@ -696,7 +709,7 @@
 
     .guide-actions {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
       gap: 8px;
     }
 
@@ -827,6 +840,26 @@
       padding: 0;
     }
 
+    .gallery-title {
+      position: absolute;
+      top: max(24px, env(safe-area-inset-top));
+      right: 24px;
+      z-index: 3;
+      text-align: right;
+      color: var(--white);
+      text-shadow: 0 2px 14px rgba(24, 19, 16, .34);
+    }
+
+    .gallery-title .kicker {
+      margin-bottom: 6px;
+      color: rgba(255, 250, 242, .86);
+    }
+
+    .gallery-title .section-title {
+      color: var(--white);
+      font-size: clamp(30px, 8vw, 38px);
+    }
+
     .gallery-only .gallery {
       width: 100%;
       height: 100svh;
@@ -955,7 +988,7 @@
   </style>
 </head>
 <body>
-  <audio id="bgm" src="assets/bgm.mp3" preload="auto" loop></audio>
+  <audio id="bgm" src="assets/bgm.mp3" preload="auto" autoplay loop></audio>
   <main class="app" aria-label="婚礼电子请柬">
     <section class="slide active light" aria-label="封面">
       <div class="bg-carousel" data-carousel="hero">
@@ -975,7 +1008,7 @@
             </svg>
           </button>
         </div>
-        <div>
+        <div class="hero-copy">
           <h1 class="hero-names reveal">黄洪逸 & 庞璐</h1>
           <p class="lead reveal">我们生命旅程中的亲朋挚友：</p>
           <p class="lead reveal">有生之年，喜相逢。</p>
@@ -983,7 +1016,7 @@
           <div class="button-row three reveal">
             <button class="button primary" type="button" data-next>开启请柬</button>
             <button class="button" type="button" data-goto="1">查看地点</button>
-            <button class="button" type="button" data-goto="2">周边攻略</button>
+            <button class="button" type="button" data-goto="4">周边攻略</button>
           </div>
         </div>
       </div>
@@ -1027,7 +1060,7 @@
               <a href="https://map.baidu.com/poi/%E9%BE%99%E6%B5%B7%E9%92%BB%E7%9F%B3%E5%A4%A7%E9%85%92%E5%BA%97-%E5%9C%B0%E4%B8%8A%E5%81%9C%E8%BD%A6%E5%9C%BA/@13117524.646701362,2789188.456964983,20.38z?uid=3f57d4fadbd28cda9d95debc&amp;ugc_type=3&amp;ugc_ver=1&amp;device_ratio=1&amp;compat=1&amp;en_uid=3f57d4fadbd28cda9d95debc&amp;pcevaname=pc4.1&amp;querytype=detailConInfo&amp;da_src=shareurl" target="_blank" rel="noreferrer">百度地图</a>
               <a href="https://uri.amap.com/search?keyword=福建省漳州市龙海区钻石大酒店&city=漳州" target="_blank" rel="noreferrer">高德导航</a>
             </div>
-            <button class="button primary" type="button" data-goto="2">查看 20km 周边攻略</button>
+            <button class="button primary" type="button" data-goto="4">查看 20km 周边攻略</button>
           </div>
           <div class="schedule-list">
             <div class="schedule-item">
@@ -1047,31 +1080,12 @@
       </div>
     </section>
 
-    <section class="slide cream travel" aria-label="周边旅游攻略">
-      <div class="content">
-        <div class="travel-head">
-          <p class="kicker reveal">Travel Guide</p>
-          <h2 class="section-title reveal">周边逛吃推荐</h2>
-          <p class="lead reveal">以婚礼酒店为中心，我们整理了近期适合顺路逛吃的目的地清单，供您参考。</p>
-        </div>
-
-        <div class="guide-panel reveal" data-stop-swipe>
-          <div class="search-box">
-            <div class="filter-row" id="guideFilters" aria-label="攻略分类"></div>
-          </div>
-
-          <div class="route-view" aria-live="polite">
-            <div class="route-tabs" id="routeTabs" aria-label="路线查看"></div>
-            <div id="routeDetail"></div>
-          </div>
-
-          <div class="guide-grid" id="guideList" aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
     <section class="slide cream gallery-only" aria-label="相册">
       <div class="content">
+        <div class="gallery-title reveal">
+          <p class="kicker">MOMENT</p>
+          <h2 class="section-title">时刻</h2>
+        </div>
         <div class="gallery reveal" data-carousel="gallery">
           <div class="gallery-frame active" style="--photo: url('https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-01.jpg')">
             <img src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/gallery-01.jpg" alt="婚纱照四">
@@ -1114,6 +1128,30 @@
         </div>
       </div>
     </section>
+
+    <section class="slide cream travel" aria-label="周边旅游攻略">
+      <div class="content">
+        <div class="travel-head">
+          <p class="kicker reveal">Travel Guide</p>
+          <h2 class="section-title reveal">周边逛吃推荐</h2>
+          <p class="lead reveal">以婚礼酒店为中心，我们整理了近期适合顺路逛吃的目的地清单，供您参考。</p>
+        </div>
+
+        <div class="guide-panel reveal" data-stop-swipe>
+          <div class="search-box">
+            <div class="filter-row" id="guideFilters" aria-label="攻略分类"></div>
+          </div>
+
+          <div class="route-view" aria-live="polite">
+            <div class="route-tabs" id="routeTabs" aria-label="路线查看"></div>
+            <div id="routeDetail"></div>
+          </div>
+
+          <div class="guide-grid" id="guideList" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
 
     <div class="pager" aria-label="页面进度"></div>
   </main>
@@ -1168,7 +1206,16 @@
       goTo(index - 1);
     }
 
-    nextButtons.forEach((button) => button.addEventListener("click", next));
+    function playMusicFromGesture() {
+      const bgmEl = document.querySelector("#bgm");
+      if (userPausedMusic || !bgmEl || !bgmEl.paused) return;
+      bgmEl.play().catch(() => {});
+    }
+
+    nextButtons.forEach((button) => button.addEventListener("click", () => {
+      playMusicFromGesture();
+      next();
+    }));
     gotoButtons.forEach((button) => {
       button.addEventListener("click", () => goTo(Number(button.dataset.goto)));
     });
@@ -1238,6 +1285,9 @@
       });
     }
 
+    const GUIDE_IMAGE_BASE = "https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com";
+    const guideImage = (fileName) => `${GUIDE_IMAGE_BASE}/${fileName}?imageMogr2/thumbnail/720x/quality/60/format/webp`;
+
     const guideItems = [
       {
         name: "紫云公园 / 紫云山",
@@ -1246,7 +1296,8 @@
         time: "清晨 / 傍晚",
         tags: ["近距离", "登高", "散步"],
         desc: "离酒店很近的山景休闲点，适合婚礼前后短时间透气，看九龙江方向的城市风景。",
-        query: "漳州 龙海 紫云公园"
+        query: "漳州 龙海 紫云公园",
+        image: guideImage("ziyunyan.png")
       },
       {
         name: "月港古镇",
@@ -1255,7 +1306,8 @@
         time: "傍晚",
         tags: ["海丝古港", "古街", "人文"],
         desc: "明代海上丝路名港，适合放慢脚步看古街巷、古码头和海澄一带的老城肌理。",
-        query: "漳州 龙海 月港古镇"
+        query: "漳州 龙海 月港古镇",
+        image: guideImage("yuegang.jpg")
       },
       {
         name: "后港古街 / 石码老街",
@@ -1264,7 +1316,8 @@
         time: "晚上",
         tags: ["夜游", "小吃", "烟火气"],
         desc: "龙海老城烟火气最集中的一带，晚上更舒服，适合把小吃和散步安排在一起。",
-        query: "漳州 龙海 后港古街"
+        query: "漳州 龙海 后港古街",
+        image: guideImage("hougang.jpg")
       },
       {
         name: "龙江颂景区",
@@ -1273,7 +1326,8 @@
         time: "傍晚",
         tags: ["江景", "步道", "夜景"],
         desc: "江景、步道和龙海文旅地标感比较完整，夏天建议避开正午，傍晚去更舒服。",
-        query: "漳州 龙海 龙江颂景区"
+        query: "漳州 龙海 龙江颂景区",
+        image: guideImage("longjiangsong.jpg")
       },
       {
         name: "埭美古村",
@@ -1282,7 +1336,8 @@
         time: "上午",
         tags: ["红砖古厝", "水上古村", "出片"],
         desc: "闽南红砖古厝和水系环绕的古村，辨识度高，适合亲友拍照打卡。",
-        query: "漳州 龙海 埭美古村"
+        query: "漳州 龙海 埭美古村",
+        image: guideImage("dimei.jpg")
       },
       {
         name: "江东桥 / 虎渡桥",
@@ -1291,7 +1346,8 @@
         time: "上午",
         tags: ["宋代古桥", "文保", "短停留"],
         desc: "历史感很强的古桥点位，停留时间不用太长，适合对古迹感兴趣的宾客。",
-        query: "漳州 江东桥 虎渡桥"
+        query: "漳州 江东桥 虎渡桥",
+        image: guideImage("jiangdongqiao.jpg")
       },
       {
         name: "漳州古城",
@@ -1300,7 +1356,8 @@
         time: "下午 / 晚上",
         tags: ["压线点", "古城", "小吃"],
         desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中。",
-        query: "漳州古城"
+        query: "漳州古城",
+        image: guideImage("zhangzhougucheng.jpeg")
       },
       {
         name: "南山寺",
@@ -1318,7 +1375,47 @@
         time: "清晨",
         tags: ["山水石刻", "4A", "偏外"],
         desc: "漳州知名山水石刻景区，可能略超 20km，适合作为有车亲友的延伸备选。",
-        query: "漳州 云洞岩"
+        query: "漳州 云洞岩",
+        image: guideImage("yundongyan.jpeg")
+      },
+      {
+        name: "海澄都城隍庙",
+        category: "古迹",
+        distance: "1-3km",
+        time: "上午 / 傍晚",
+        tags: ["海澄老城", "民俗", "短停留"],
+        desc: "离酒店和月港片区都近，适合想短时间看海澄老城民俗建筑的亲友，安排在饭前饭后都顺路。",
+        query: "漳州 龙海 海澄都城隍庙",
+        image: guideImage("chenghuangmiao.jpg")
+      },
+      {
+        name: "瑞竹岩",
+        category: "景点",
+        distance: "12-18km",
+        time: "清晨 / 上午",
+        tags: ["山景", "寺院", "江东桥顺路"],
+        desc: "山景和寺院气质更安静，可与江东桥、虎渡桥顺路串联，适合有车且想看自然风光的亲友。",
+        query: "漳州 龙海 瑞竹岩"
+      },
+      {
+        name: "天一总局旧址",
+        category: "古迹",
+        distance: "18-25km",
+        time: "上午",
+        tags: ["侨批", "近代建筑", "角美方向"],
+        desc: "中国早期民间国际邮政和侨批文化相关旧址，故事性强，但在角美方向，更适合自驾亲友作为延伸点。",
+        query: "漳州 龙海 天一总局旧址",
+        image: guideImage("tianyizongju.jpg")
+      },
+      {
+        name: "白礁慈济祖宫",
+        category: "古迹",
+        distance: "20-30km",
+        time: "上午 / 下午",
+        tags: ["保生大帝", "闽台信俗", "角美方向"],
+        desc: "保生大帝信俗的重要祖宫，建筑和闽台文化辨识度高，距离稍远，建议有车亲友单独安排。",
+        query: "漳州 龙海 白礁慈济祖宫",
+        image: guideImage("cijizugong.jpg")
       },
       {
         name: "石码五香",
@@ -1327,7 +1424,8 @@
         time: "午后 / 夜宵",
         tags: ["龙海代表", "炸物", "必吃"],
         desc: "豆皮炸卷外酥内香，是龙海最有代表性的古早味之一，和卤面搭配很稳。",
-        query: "龙海 石码五香"
+        query: "龙海 石码五香",
+        image: guideImage("wuxiang.jpg")
       },
       {
         name: "卤面",
@@ -1337,6 +1435,26 @@
         tags: ["主食", "闽南味", "配五香"],
         desc: "浓稠卤汤配料丰富，游客接受度高，适合作为石码小吃的主食担当。",
         query: "龙海 石码 卤面"
+      },
+      {
+        name: "沙茶面",
+        category: "美食",
+        distance: "4-8km",
+        time: "午餐 / 晚餐",
+        tags: ["闽南味", "汤面", "配料丰富"],
+        desc: "沙茶汤底香浓，配料选择多，适合想吃热乎主食但又想有本地特色的亲友。",
+        query: "龙海 沙茶面",
+        image: guideImage("shachamian.jpg")
+      },
+      {
+        name: "豆花粉丝",
+        category: "美食",
+        distance: "4-8km",
+        time: "午餐 / 晚餐",
+        tags: ["龙海小吃", "清爽", "本地味"],
+        desc: "豆花滑嫩、粉丝爽口，是龙海很有辨识度的小吃，适合想尝本地口味但不想太油的亲友。",
+        query: "龙海 豆花粉丝",
+        image: guideImage("douhuafensi.jpeg")
       },
       {
         name: "面线糊",
@@ -1375,6 +1493,16 @@
         query: "龙海 肉粽"
       },
       {
+        name: "四果汤",
+        category: "美食",
+        distance: "4-8km",
+        time: "午后 / 晚上",
+        tags: ["甜汤", "解暑", "夏天友好"],
+        desc: "夏天很合适的清爽甜汤，适合作为逛完老街后的收尾，也适合不想吃太油的亲友。",
+        query: "龙海 四果汤",
+        image: guideImage("siguotang.jpeg")
+      },
+      {
         name: "海蛎煎",
         category: "美食",
         distance: "4-10km",
@@ -1407,7 +1535,8 @@
       const isFood = item.category === "美食";
       return {
         ...item,
-        category: isFood ? "美食" : "景点"
+        category: isFood ? "美食" : "景点",
+        hasNavigation: !isFood
       };
     });
 
@@ -1458,6 +1587,7 @@
 
       list.innerHTML = filtered.map((item) => (
         `<article class="guide-card">
+          ${item.image ? `<img class="guide-photo" src="${item.image}" alt="${item.name}" loading="lazy">` : ""}
           <div class="guide-meta">
             <span class="guide-pill">${item.category}</span>
             <span class="guide-pill distance">${item.distance}</span>
@@ -1468,10 +1598,9 @@
           <div class="guide-meta">
             ${item.tags.map((tag) => `<span class="guide-pill">${tag}</span>`).join("")}
           </div>
-          <div class="guide-actions">
-            <a href="${amapSearchUrl(item.query)}" target="_blank" rel="noreferrer">高德查看</a>
-            <a href="${baiduSearchUrl(item.query)}" target="_blank" rel="noreferrer">百度查看</a>
-          </div>
+          ${item.hasNavigation ? `<div class="guide-actions">
+            <a href="${baiduSearchUrl(item.query)}" target="_blank" rel="noreferrer">导航</a>
+          </div>` : ""}
         </article>`
       )).join("");
     }
@@ -1534,7 +1663,8 @@
 
     const musicButton = document.querySelector("#musicButton");
     const bgm = document.querySelector("#bgm");
-    let musicOn = true;
+    let musicOn = false;
+    let userPausedMusic = false;
 
     function renderMusicButton() {
       musicButton.style.background = musicOn ? "#fffaf2" : "rgba(255, 255, 255, .14)";
@@ -1546,6 +1676,7 @@
     musicButton.addEventListener("click", async () => {
       if (!bgm) return;
       if (bgm.paused) {
+        userPausedMusic = false;
         try {
           await bgm.play();
           musicOn = true;
@@ -1553,6 +1684,7 @@
           musicOn = false;
         }
       } else {
+        userPausedMusic = true;
         bgm.pause();
         musicOn = false;
       }
@@ -1569,11 +1701,27 @@
       renderMusicButton();
     });
 
+    async function tryAutoPlayMusic() {
+      if (userPausedMusic || !bgm || !bgm.paused) return;
+      try {
+        await bgm.play();
+        musicOn = true;
+      } catch (error) {
+        musicOn = false;
+      }
+      renderMusicButton();
+    }
+
+    ["pointerdown", "touchstart", "keydown"].forEach((eventName) => {
+      window.addEventListener(eventName, tryAutoPlayMusic, { once: true, passive: true });
+    });
+
     render();
     initTravelGuide();
     autoPlayCarousel("[data-carousel='hero']", 4200);
     autoPlayCarousel("[data-carousel='gallery']", 3200);
     updateCountdown();
+    tryAutoPlayMusic();
     window.setInterval(updateCountdown, 1000);
   </script>
 </body>

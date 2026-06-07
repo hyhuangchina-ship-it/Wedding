@@ -18,9 +18,9 @@
         <text class="lead light-lead reveal">有生之年，喜相逢。</text>
         <text class="lead light-lead reveal">佳期已定，婚礼见！</text>
         <view class="button-row three reveal">
-          <button class="button primary" type="button" bindtap="next">开启请柬</button>
-          <button class="button" type="button" data-index="1" bindtap="goTo">查看地点</button>
-          <button class="button" type="button" data-index="2" bindtap="goTo">周边攻略</button>
+          <button class="button primary hero-main-button" type="button" bindtap="startInvitation">开启请柬</button>
+          <button class="button hero-secondary-button" type="button" data-index="1" bindtap="goTo">查看地点</button>
+          <button class="button hero-secondary-button" type="button" data-index="4" bindtap="goTo">周边攻略</button>
         </view>
       </view>
     </view>
@@ -87,7 +87,40 @@
     </view>
   </view>
 
-  <view class="slide cream travel {{current === 2 ? 'active' : ''}} {{current > 2 ? 'prev' : ''}}">
+  <view class="slide cream gallery-only {{current === 2 ? 'active' : ''}} {{current > 2 ? 'prev' : ''}}">
+    <image class="cream-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg" mode="aspectFill" />
+    <view class="cream-wash"></view>
+    <view class="content gallery-content">
+      <view class="gallery-title reveal">
+        <text class="kicker">MOMENT</text>
+        <text class="section-title">时刻</text>
+      </view>
+      <view class="gallery reveal">
+        <view wx:for="{{galleryPhotos}}" wx:key="*this" wx:for-index="photoIndex" class="gallery-frame {{galleryIndex === photoIndex ? 'active' : ''}}">
+          <image src="{{item}}" mode="aspectFit" />
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="slide light thanks {{current === 3 ? 'active' : ''}} {{current > 3 ? 'prev' : ''}}">
+    <image class="photo-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/place2.jpg" mode="aspectFill" />
+    <view class="veil"></view>
+    <view class="content">
+      <text class="chip reveal">See You Soon</text>
+      <view class="thanks-copy">
+        <text class="title thanks-title reveal">【公历 7月18日 · 福建龙海】</text>
+        <text class="lead light-lead reveal">我们如此有缘</text>
+        <text class="lead light-lead reveal">在生命中的不同经纬相识</text>
+        <text class="lead light-lead reveal">共度一段珍贵岁月</text>
+        <text class="lead light-lead reveal">如今，一场集齐回忆与幸福的团建即将开始</text>
+        <text class="lead light-lead reveal">期待重逢</text>
+        <text class="footer-date reveal">黄洪逸 ＆ 庞璐</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="slide cream travel {{current === 4 ? 'active' : ''}} {{current > 4 ? 'prev' : ''}}">
     <image class="cream-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg" mode="aspectFill" />
     <view class="cream-wash"></view>
     <view class="content travel-content">
@@ -107,6 +140,7 @@
         <scroll-view class="guide-grid" scroll-y enhanced enable-flex="{{true}}" show-scrollbar="{{false}}" bindscroll="onGuideScroll" bindscrolltoupper="onGuideScrollUpper" bindscrolltolower="onGuideScrollLower">
           <view wx:if="{{!filteredGuideItems.length}}" class="empty-guide">没有找到匹配内容，换个关键词试试。</view>
           <view wx:for="{{filteredGuideItems}}" wx:key="name" class="guide-card">
+            <image wx:if="{{item.image}}" class="guide-photo" src="{{item.image}}" mode="aspectFill" lazy-load="{{true}}" />
             <view class="guide-meta">
               <text class="guide-pill">{{item.category}}</text>
               <text class="guide-pill distance">{{item.distance}}</text>
@@ -117,9 +151,8 @@
             <view class="guide-meta">
               <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="guide-pill">{{tag}}</text>
             </view>
-            <view class="guide-actions">
-              <button type="button" data-query="{{item.query}}" data-provider="高德" bindtap="copyMapKeyword">高德查看</button>
-              <button type="button" data-query="{{item.query}}" data-provider="百度" bindtap="copyMapKeyword">百度查看</button>
+            <view wx:if="{{item.hasNavigation}}" class="guide-actions">
+              <button type="button" data-query="{{item.query}}" data-provider="百度" bindtap="copyMapKeyword">导航</button>
             </view>
           </view>
         </scroll-view>
@@ -127,34 +160,6 @@
     </view>
   </view>
 
-  <view class="slide cream gallery-only {{current === 3 ? 'active' : ''}} {{current > 3 ? 'prev' : ''}}">
-    <image class="cream-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/bg-soft.jpg" mode="aspectFill" />
-    <view class="cream-wash"></view>
-    <view class="content gallery-content">
-      <view class="gallery reveal">
-        <view wx:for="{{galleryPhotos}}" wx:key="*this" wx:for-index="photoIndex" class="gallery-frame {{galleryIndex === photoIndex ? 'active' : ''}}">
-          <image src="{{item}}" mode="aspectFit" />
-        </view>
-      </view>
-    </view>
-  </view>
-
-  <view class="slide light thanks {{current === 4 ? 'active' : ''}} {{current > 4 ? 'prev' : ''}}">
-    <image class="photo-bg" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/place2.jpg" mode="aspectFill" />
-    <view class="veil"></view>
-    <view class="content">
-      <text class="chip reveal">See You Soon</text>
-      <view class="thanks-copy">
-        <text class="title thanks-title reveal">【公历 7月18日 · 福建龙海】</text>
-        <text class="lead light-lead reveal">我们如此有缘</text>
-        <text class="lead light-lead reveal">在生命中的不同经纬相识</text>
-        <text class="lead light-lead reveal">共度一段珍贵岁月</text>
-        <text class="lead light-lead reveal">如今，一场集齐回忆与幸福的团建即将开始</text>
-        <text class="lead light-lead reveal">期待重逢</text>
-        <text class="footer-date reveal">黄洪逸 ＆ 庞璐</text>
-      </view>
-    </view>
-  </view>
 
   <view class="pager">
     <button wx:for="{{pageDots}}" wx:key="*this" wx:for-index="dotIndex" class="dot {{current === dotIndex ? 'active' : ''}}" type="button" data-index="{{dotIndex}}" bindtap="goTo"></button>

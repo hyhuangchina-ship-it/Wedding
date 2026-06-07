@@ -2,6 +2,10 @@ const weddingDate = new Date("2026-07-18T18:00:00+08:00").getTime();
 
 const IMAGE_BASE = "https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com";
 
+function guideImage(fileName) {
+  return IMAGE_BASE + "/" + fileName + "?imageMogr2/thumbnail/720x/quality/60/format/webp";
+}
+
 const heroPhotos = [
   IMAGE_BASE + "/1.jpg",
   IMAGE_BASE + "/2.jpg",
@@ -26,7 +30,8 @@ const guideItems = [
     time: "清晨 / 傍晚",
     tags: ["近距离", "登高", "散步"],
     desc: "离酒店很近的山景休闲点，适合婚礼前后短时间透气，看九龙江方向的城市风景。",
-    query: "漳州 龙海 紫云公园"
+    query: "漳州 龙海 紫云公园",
+    image: guideImage("ziyunyan.png")
   },
   {
     name: "月港古镇",
@@ -35,7 +40,8 @@ const guideItems = [
     time: "傍晚",
     tags: ["海丝古港", "古街", "人文"],
     desc: "明代海上丝路名港，适合放慢脚步看古街巷、古码头和海澄一带的老城肌理。",
-    query: "漳州 龙海 月港古镇"
+    query: "漳州 龙海 月港古镇",
+    image: guideImage("yuegang.jpg")
   },
   {
     name: "后港古街 / 石码老街",
@@ -44,7 +50,8 @@ const guideItems = [
     time: "晚上",
     tags: ["夜游", "小吃", "烟火气"],
     desc: "龙海老城烟火气比较集中的一带，晚上更舒服，适合把小吃和散步安排在一起。",
-    query: "漳州 龙海 后港古街"
+    query: "漳州 龙海 后港古街",
+    image: guideImage("hougang.jpg")
   },
   {
     name: "龙江颂景区",
@@ -53,7 +60,8 @@ const guideItems = [
     time: "傍晚",
     tags: ["江景", "步道", "夜景"],
     desc: "江景、步道和龙海文旅地标感比较完整，夏天建议避开正午，傍晚去更舒服。",
-    query: "漳州 龙海 龙江颂景区"
+    query: "漳州 龙海 龙江颂景区",
+    image: guideImage("longjiangsong.jpg")
   },
   {
     name: "埭美古村",
@@ -62,7 +70,8 @@ const guideItems = [
     time: "上午",
     tags: ["红砖古厝", "水上古村", "出片"],
     desc: "闽南红砖古厝和水系环绕的古村，辨识度高，适合亲友拍照打卡。",
-    query: "漳州 龙海 埭美古村"
+    query: "漳州 龙海 埭美古村",
+    image: guideImage("dimei.jpg")
   },
   {
     name: "江东桥 / 虎渡桥",
@@ -71,7 +80,8 @@ const guideItems = [
     time: "上午",
     tags: ["宋代古桥", "文保", "短停留"],
     desc: "历史感很强的古桥点位，停留时间不用太长，适合对古迹感兴趣的宾客。",
-    query: "漳州 江东桥 虎渡桥"
+    query: "漳州 江东桥 虎渡桥",
+    image: guideImage("jiangdongqiao.jpg")
   },
   {
     name: "漳州古城",
@@ -80,16 +90,8 @@ const guideItems = [
     time: "下午 / 晚上",
     tags: ["压线点", "古城", "小吃"],
     desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中，严格 20km 时可作为边界备选。",
-    query: "漳州古城"
-  },
-  {
-    name: "南山寺",
-    category: "古迹",
-    distance: "18-22km",
-    time: "上午",
-    tags: ["千年古刹", "安静", "边界备选"],
-    desc: "靠近漳州主城的寺庙古迹，适合喜欢安静参观的亲友，可与古城二选一。",
-    query: "漳州 南山寺"
+    query: "漳州古城",
+    image: guideImage("zhangzhougucheng.jpeg")
   },
   {
     name: "云洞岩",
@@ -98,7 +100,48 @@ const guideItems = [
     time: "清晨",
     tags: ["山水石刻", "4A", "偏户外"],
     desc: "漳州知名山水石刻景区，可能略超 20km，适合作为有车亲友的延伸备选。",
-    query: "漳州 云洞岩"
+    query: "漳州 云洞岩",
+    image: guideImage("yundongyan.jpeg")
+  },
+  {
+    name: "海澄都城隍庙",
+    category: "古迹",
+    distance: "1-3km",
+    time: "上午 / 傍晚",
+    tags: ["海澄老城", "民俗", "短停留"],
+    desc: "离酒店和月港片区都近，适合想短时间看海澄老城民俗建筑的亲友，安排在饭前饭后都顺路。",
+    query: "漳州 龙海 海澄都城隍庙",
+    image: guideImage("chenghuangmiao.jpg")
+  },
+  {
+    name: "瑞竹岩",
+    category: "景点",
+    distance: "12-18km",
+    time: "清晨 / 上午",
+    tags: ["山景", "寺院", "江东桥顺路"],
+    desc: "山景和寺院气质更安静，可与江东桥、虎渡桥顺路串联，适合有车且想看自然风光的亲友。",
+    query: "漳州 龙海 瑞竹岩",
+    image: guideImage("ruizhuyan.jpg")
+  },
+  {
+    name: "天一总局旧址",
+    category: "古迹",
+    distance: "18-25km",
+    time: "上午",
+    tags: ["侨批", "近代建筑", "角美方向"],
+    desc: "中国早期民间国际邮政和侨批文化相关旧址，故事性强，但在角美方向，更适合自驾亲友作为延伸点。",
+    query: "漳州 龙海 天一总局旧址",
+    image: guideImage("tianyizongju.jpg")
+  },
+  {
+    name: "白礁慈济祖宫",
+    category: "古迹",
+    distance: "20-30km",
+    time: "上午 / 下午",
+    tags: ["保生大帝", "闽台信俗", "角美方向"],
+    desc: "保生大帝信俗的重要祖宫，建筑和闽台文化辨识度高，距离稍远，建议有车亲友单独安排。",
+    query: "漳州 龙海 白礁慈济祖宫",
+    image: guideImage("baijiaocijizugong.png")
   },
   {
     name: "石码五香",
@@ -107,7 +150,8 @@ const guideItems = [
     time: "午后 / 夜宵",
     tags: ["龙海代表", "炸物", "必吃"],
     desc: "豆皮炸卷外酥内香，是龙海很有代表性的古早味之一，和卤面搭配很稳。",
-    query: "龙海 石码五香"
+    query: "龙海 石码五香",
+    image: guideImage("wuxiang.jpg")
   },
   {
     name: "卤面",
@@ -116,7 +160,28 @@ const guideItems = [
     time: "午餐 / 晚餐",
     tags: ["主食", "闽南味", "配五香"],
     desc: "浓稠卤汤配料丰富，游客接受度高，适合作为石码小吃的主食担当。",
-    query: "龙海 石码 卤面"
+    query: "龙海 石码 卤面",
+    image: guideImage("lumian.jpg")
+  },
+  {
+    name: "沙茶面",
+    category: "美食",
+    distance: "4-8km",
+    time: "午餐 / 晚餐",
+    tags: ["闽南味", "汤面", "配料丰富"],
+    desc: "沙茶汤底香浓，配料选择多，适合想吃热乎主食但又想有本地特色的亲友。",
+    query: "龙海 沙茶面",
+    image: guideImage("shachamian.jpg")
+  },
+  {
+    name: "豆花粉丝",
+    category: "美食",
+    distance: "4-8km",
+    time: "午餐 / 晚餐",
+    tags: ["龙海小吃", "清爽", "本地味"],
+    desc: "豆花滑嫩、粉丝爽口，是龙海很有辨识度的小吃，适合想尝本地口味但不想太油的亲友。",
+    query: "龙海 豆花粉丝",
+    image: guideImage("douhuafensi.jpeg")
   },
   {
     name: "面线糊",
@@ -125,7 +190,8 @@ const guideItems = [
     time: "早餐 / 夜宵",
     tags: ["早餐", "夜宵", "热乎"],
     desc: "适合配油条、卤蛋、醋肉或大肠，夏天晚上吃也不会太重。",
-    query: "龙海 石码 面线糊"
+    query: "龙海 石码 面线糊",
+    image: guideImage("mianxianhu.jpg")
   },
   {
     name: "锅边糊",
@@ -134,7 +200,8 @@ const guideItems = [
     time: "早餐",
     tags: ["古早味", "清爽", "早餐"],
     desc: "本地早餐感很强，口味清爽，适合不想吃太油的亲友。",
-    query: "龙海 锅边糊"
+    query: "龙海 锅边糊",
+    image: guideImage("guobianhu.jpg")
   },
   {
     name: "米苔目",
@@ -143,7 +210,8 @@ const guideItems = [
     time: "午餐 / 夜宵",
     tags: ["本地特色", "口感特别", "小吃"],
     desc: "口感有记忆点，可作为石码小吃清单里的特色补充。",
-    query: "龙海 石码 米苔目"
+    query: "龙海 石码 米苔目",
+    image: guideImage("mitaimu.jpg")
   },
   {
     name: "肉粽",
@@ -152,7 +220,18 @@ const guideItems = [
     time: "早餐 / 加餐",
     tags: ["闽南小吃", "好接受", "加餐"],
     desc: "闽南常见小吃，适合放进小吃九宫格，也适合打包带走。",
-    query: "龙海 肉粽"
+    query: "龙海 肉粽",
+    image: guideImage("rouzong.jpg")
+  },
+  {
+    name: "四果汤",
+    category: "美食",
+    distance: "4-8km",
+    time: "午后 / 晚上",
+    tags: ["甜汤", "解暑", "夏天友好"],
+    desc: "夏天很合适的清爽甜汤，适合作为逛完老街后的收尾，也适合不想吃太油的亲友。",
+    query: "龙海 四果汤",
+    image: guideImage("siguotang.jpeg")
   },
   {
     name: "海蛎煎",
@@ -161,25 +240,18 @@ const guideItems = [
     time: "晚餐 / 夜宵",
     tags: ["海味", "排档", "夜市"],
     desc: "海味明显，适合在老街或排档场景里顺手点一份。",
-    query: "龙海 海蛎煎"
+    query: "龙海 海蛎煎",
+    image: guideImage("hailijian.jpg")
   },
   {
-    name: "鸭肉粥",
-    category: "美食",
-    distance: "4-8km",
-    time: "夜宵",
-    tags: ["清淡", "夜宵", "收尾"],
-    desc: "比炒物更清淡，适合晚间收尾，也适合长辈口味。",
-    query: "龙海 鸭肉粥"
-  },
-  {
-    name: "海澄 / 月港海鲜排档",
+    name: "锦江道 / 月港海鲜排档",
     category: "美食",
     distance: "3-8km",
     time: "晚餐",
     tags: ["多人聚餐", "海鲜", "江口风味"],
-    desc: "适合多人正餐，想吃本地海鲜和江口风味时可以优先看海澄、月港一带。",
-    query: "龙海 海澄 月港 海鲜排档"
+    desc: "适合多人正餐，想吃本地海鲜和江口风味时可以优先看锦江道、月港一带。",
+    query: "龙海 海澄 月港 海鲜排档",
+    image: guideImage("dapaidang.jpeg")
   }
 ];
 
@@ -190,6 +262,8 @@ const normalizedGuideItems = guideItems.map((item) => {
     category: isFood ? "美食" : "景点",
     distance: item.distance,
     time: item.time,
+    hasNavigation: !isFood,
+    image: item.image || "",
     tags: item.tags,
     desc: item.desc,
     query: item.query
@@ -246,6 +320,7 @@ Page({
     galleryIndex: 0,
     countdown: buildCountdown(),
     musicOn: false,
+    userPausedMusic: false,
     guideItems: normalizedGuideItems,
     guideCategories,
     guideRoutes,
@@ -262,6 +337,9 @@ Page({
 
   onLoad() {
     this.createAudio();
+    this.musicTimer = setTimeout(() => {
+      this.playMusic();
+    }, 500);
     this.countdownTimer = setInterval(() => {
       this.setData({ countdown: buildCountdown() });
     }, 1000);
@@ -271,9 +349,6 @@ Page({
     this.galleryTimer = setInterval(() => {
       this.setData({ galleryIndex: (this.data.galleryIndex + 1) % galleryPhotos.length });
     }, 3200);
-    this.musicTimer = setTimeout(() => {
-      this.toggleMusic();
-    }, 500);
   },
 
   onReady() {
@@ -298,6 +373,7 @@ Page({
   },
 
   createAudio() {
+    this.applyAudioOptions();
     this.audio = wx.createInnerAudioContext();
     this.audio.src = "/miniprogram-assets/bgm.mp3";
     this.audio.loop = true;
@@ -310,6 +386,14 @@ Page({
     });
   },
 
+  applyAudioOptions() {
+    if (!wx.setInnerAudioOption) return;
+    wx.setInnerAudioOption({
+      obeyMuteSwitch: false,
+      mixWithOther: true
+    });
+  },
+
   goTo(event) {
     const nextIndex = Number(event.currentTarget.dataset.index);
     this.setCurrent(nextIndex);
@@ -317,6 +401,13 @@ Page({
 
   next() {
     this.setCurrent(this.data.current + 1);
+  },
+
+  startInvitation() {
+    if (!this.data.userPausedMusic) {
+      this.playMusic();
+    }
+    this.next();
   },
 
   previous() {
@@ -369,7 +460,7 @@ Page({
 
     if (verticalDelta < 52 || verticalDelta < horizontalDelta * 1.15) return;
 
-    if (this.data.current === 2) {
+    if (this.data.current === 4) {
       if (delta > 0 && !this.data.guideAtBottom) return;
       if (delta < 0 && !this.data.guideAtTop) return;
     }
@@ -395,9 +486,16 @@ Page({
   toggleMusic() {
     if (!this.audio) return;
     if (this.data.musicOn) {
+      this.setData({ userPausedMusic: true });
       this.audio.pause();
       return;
     }
+    this.setData({ userPausedMusic: false }, () => this.playMusic());
+  },
+
+  playMusic() {
+    if (!this.audio || this.data.userPausedMusic) return;
+    this.applyAudioOptions();
     this.audio.play();
   },
 
