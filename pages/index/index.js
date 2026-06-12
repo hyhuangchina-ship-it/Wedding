@@ -1,6 +1,10 @@
 const weddingDate = new Date("2026-07-18T18:00:00+08:00").getTime();
 
 const IMAGE_BASE = "https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com";
+const SHARE_TITLE = "\u9ec4\u6d2a\u9038 & \u5e9e\u7490 \u8bf7\u60a8\u7528\u9910\u5566~";
+const SHARE_PATH = "/pages/index/index";
+const SHARE_APP_MESSAGE_IMAGE = "/miniprogram-assets/share-app-message.jpg";
+const SHARE_TIMELINE_IMAGE = "/miniprogram-assets/share-timeline.jpg";
 
 function guideImage(fileName) {
   return IMAGE_BASE + "/" + fileName + "?imageMogr2/thumbnail/720x/quality/60/format/webp";
@@ -34,16 +38,6 @@ const guideItems = [
     image: guideImage("ziyunyan.png")
   },
   {
-    name: "月港古镇",
-    category: "古迹",
-    distance: "3-5km",
-    time: "傍晚",
-    tags: ["海丝古港", "古街", "人文"],
-    desc: "明代海上丝路名港，适合放慢脚步看古街巷、古码头和海澄一带的老城肌理。",
-    query: "漳州 龙海 月港古镇",
-    image: guideImage("yuegang.jpg")
-  },
-  {
     name: "后港古街 / 石码老街",
     category: "古街",
     distance: "4-6km",
@@ -52,6 +46,16 @@ const guideItems = [
     desc: "龙海老城烟火气比较集中的一带，晚上更舒服，适合把小吃和散步安排在一起。",
     query: "漳州 龙海 后港古街",
     image: guideImage("hougang.jpg")
+  },
+  {
+    name: "月港古镇",
+    category: "古迹",
+    distance: "3-5km",
+    time: "傍晚",
+    tags: ["海丝古港", "古街", "人文"],
+    desc: "明代海上丝路名港，适合放慢脚步看古街巷、古码头和海澄一带的老城肌理。",
+    query: "漳州 龙海 月港古镇",
+    image: guideImage("yuegang.jpg")
   },
   {
     name: "龙江颂景区",
@@ -272,17 +276,17 @@ const guideLocations = {
     name: "紫云公园 / 紫云山",
     address: "福建省漳州市龙海区紫云公园"
   },
-  "漳州 龙海 月港古镇": {
-    latitude: 24.4389,
-    longitude: 117.8265,
-    name: "月港古镇",
-    address: "福建省漳州市龙海区海澄镇月港古镇"
-  },
   "漳州 龙海 后港古街": {
     latitude: 24.4447,
     longitude: 117.8127,
     name: "后港古街 / 石码老街",
     address: "福建省漳州市龙海区石码镇后港古街"
+  },
+  "漳州 龙海 月港古镇": {
+    latitude: 24.4389,
+    longitude: 117.8265,
+    name: "月港古镇",
+    address: "福建省漳州市龙海区海澄镇月港古镇"
   },
   "漳州 龙海 龙江颂景区": {
     latitude: 24.4310,
@@ -428,6 +432,13 @@ Page({
   },
 
   onLoad() {
+    if (wx.showShareMenu) {
+      wx.showShareMenu({
+        withShareTicket: true,
+        menus: ["shareAppMessage", "shareTimeline"]
+      });
+    }
+
     this.createAudio();
     this.musicTimer = setTimeout(() => {
       this.playMusic();
@@ -462,6 +473,22 @@ Page({
       this.audio.destroy();
       this.audio = null;
     }
+  },
+
+  onShareAppMessage() {
+    return {
+      title: SHARE_TITLE,
+      path: SHARE_PATH,
+      imageUrl: SHARE_APP_MESSAGE_IMAGE
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: SHARE_TITLE,
+      query: "from=timeline",
+      imageUrl: SHARE_TIMELINE_IMAGE
+    };
   },
 
   createAudio() {

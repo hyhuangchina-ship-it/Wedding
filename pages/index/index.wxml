@@ -77,10 +77,6 @@
             <text class="schedule-time">19:00</text>
             <view><text class="schedule-title">婚礼仪式</text><text class="schedule-desc">证婚、誓言与合影</text></view>
           </view>
-          <view class="schedule-item">
-            <text class="schedule-time">19:30</text>
-            <view><text class="schedule-title">晚宴开始</text><text class="schedule-desc">敬酒、用餐、亲友致意</text></view>
-          </view>
         </view>
       </view>
     </view>

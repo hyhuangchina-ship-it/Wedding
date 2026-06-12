@@ -91,8 +91,10 @@
 }
 
 .wedding-info .content {
-  justify-content: flex-start;
-  gap: 14px;
+  justify-content: space-evenly;
+  gap: 20px;
+  padding-top: 54px;
+  padding-bottom: 38px;
 }
 
 .light {
@@ -355,6 +357,7 @@
 }
 
 .wedding-info .info-stack {
+  gap: 14px;
   margin-top: 0;
 }
 
@@ -487,7 +490,7 @@
   display: grid;
   grid-template-columns: 50px 1fr;
   gap: 10px;
-  padding: 9px 12px;
+  padding: 13px 12px;
   border-top: 1px solid rgba(57, 47, 38, 0.12);
 }
 
@@ -852,6 +855,16 @@
   .content {
     padding-top: 34px;
     padding-bottom: 18px;
+  }
+
+  .wedding-info .content {
+    gap: 14px;
+    padding-top: 38px;
+    padding-bottom: 22px;
+  }
+
+  .wedding-info .info-stack {
+    gap: 9px;
   }
 
   .hero-names {
