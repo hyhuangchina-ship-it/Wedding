@@ -91,10 +91,10 @@
 }
 
 .wedding-info .content {
-  justify-content: space-evenly;
-  gap: 20px;
-  padding-top: 54px;
-  padding-bottom: 38px;
+  justify-content: flex-start;
+  gap: 16px;
+  padding-top: 48px;
+  padding-bottom: 28px;
 }
 
 .light {
@@ -226,8 +226,8 @@
   margin-top: 4px;
   color: #2d2925;
   font-family: Georgia, "Times New Roman", "STSong", serif;
-  font-size: 34px;
-  font-weight: 400;
+  font-size: 32px;
+  font-weight: bolder;
   line-height: 1.04;
 }
 
@@ -244,7 +244,7 @@
   display: block;
   margin-top: 4px;
   color: #756a61;
-  font-size: 15px;
+  font-size: 12px;
   line-height: 1.58;
 }
 
@@ -357,8 +357,18 @@
 }
 
 .wedding-info .info-stack {
-  gap: 14px;
+  gap: 12px;
   margin-top: 0;
+}
+
+.wedding-info .couple {
+  margin-top: 14px;
+}
+
+.wedding-info .person {
+  min-height: 78px;
+  padding-top: 14px;
+  padding-bottom: 14px;
 }
 
 .detail-box,
@@ -376,7 +386,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 12px;
+  min-height: 62px;
+  box-sizing: border-box;
+  padding: 18px 14px;
   color: #756a61;
   font-size: 12px;
 }
@@ -395,7 +407,7 @@
 
 .timebox {
   display: flex;
-  min-height: 52px;
+  min-height: 58px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -416,12 +428,12 @@
 
 .venue-box {
   overflow: hidden;
-  padding: 10px;
+  padding: 12px;
 }
 
 .venue-photo {
   width: 100%;
-  height: 110px;
+  height: 138px;
   border-radius: 6px;
 }
 
@@ -446,7 +458,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 8px;
-  margin: 10px 0;
+  margin: 12px 0 0;
 }
 
 .map-row button,
@@ -490,7 +502,9 @@
   display: grid;
   grid-template-columns: 50px 1fr;
   gap: 10px;
-  padding: 13px 12px;
+  min-height: 64px;
+  box-sizing: border-box;
+  padding: 15px 14px;
   border-top: 1px solid rgba(57, 47, 38, 0.12);
 }
 
@@ -858,13 +872,29 @@
   }
 
   .wedding-info .content {
-    gap: 14px;
-    padding-top: 38px;
-    padding-bottom: 22px;
+    gap: 11px;
+    padding-top: 34px;
+    padding-bottom: 18px;
   }
 
   .wedding-info .info-stack {
-    gap: 9px;
+    gap: 8px;
+  }
+
+  .wedding-info .person {
+    min-height: 68px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .detail-box {
+    min-height: 54px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .timebox {
+    min-height: 50px;
   }
 
   .hero-names {
@@ -880,12 +910,13 @@
   }
 
   .venue-photo {
-    height: 86px;
+    height: 98px;
   }
 
   .schedule-item {
-    padding-top: 9px;
-    padding-bottom: 9px;
+    min-height: 56px;
+    padding-top: 11px;
+    padding-bottom: 11px;
   }
 
   .gallery {

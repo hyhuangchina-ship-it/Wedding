@@ -1,4 +1,4 @@
-const weddingDate = new Date("2026-07-18T18:00:00+08:00").getTime();
+const weddingDate = new Date("2026-07-18T18:30:00+08:00").getTime();
 
 const IMAGE_BASE = "https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com";
 const SHARE_TITLE = "\u9ec4\u6d2a\u9038 & \u5e9e\u7490 \u8bf7\u60a8\u7528\u9910\u5566~";
@@ -158,6 +158,16 @@ const guideItems = [
     image: guideImage("huoshankou.jpeg")
   },
   {
+    name: "四果汤",
+    category: "美食",
+    distance: "4-8km",
+    time: "午后 / 晚上",
+    tags: ["甜汤", "解暑", "夏天友好"],
+    desc: "夏天很合适的清爽甜汤，适合作为逛完老街后的收尾，也适合不想吃太油的亲友。",
+    query: "龙海 四果汤",
+    image: guideImage("siguotang.jpeg")
+  },
+  {
     name: "石码五香",
     category: "美食",
     distance: "4-6km",
@@ -236,16 +246,6 @@ const guideItems = [
     desc: "闽南常见小吃，适合放进小吃九宫格，也适合打包带走。",
     query: "龙海 肉粽",
     image: guideImage("rouzong.jpg")
-  },
-  {
-    name: "四果汤",
-    category: "美食",
-    distance: "4-8km",
-    time: "午后 / 晚上",
-    tags: ["甜汤", "解暑", "夏天友好"],
-    desc: "夏天很合适的清爽甜汤，适合作为逛完老街后的收尾，也适合不想吃太油的亲友。",
-    query: "龙海 四果汤",
-    image: guideImage("siguotang.jpeg")
   },
   {
     name: "海蛎煎",

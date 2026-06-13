@@ -48,7 +48,7 @@
       <view class="info-stack reveal">
         <view class="detail-box">
           <text>婚礼时间</text>
-          <text class="detail-strong">2026 年 7 月 18 日 18:00</text>
+          <text class="detail-strong">2026 年 7 月 18 日 18:30</text>
         </view>
 
         <view class="countdown">
@@ -61,7 +61,6 @@
         <view class="venue-box">
           <image class="venue-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/hotel.jpg" mode="aspectFill" />
           <text class="venue-title">福建省漳州市龙海区钻石大酒店 · 水晶厅</text>
-          <text class="venue-desc">2026 年 7 月 18 日 19:00。建议提前 30 分钟到达，现场以酒店指引为准。</text>
           <view class="map-row">
             <button class="map-primary" type="button" bindtap="openVenueLocation">打开地图</button>
             <button type="button" data-query="福建省漳州市龙海区钻石大酒店" bindtap="copyMapKeyword">复制地址</button>
@@ -72,10 +71,6 @@
           <view class="schedule-item">
             <text class="schedule-time">18:30</text>
             <view><text class="schedule-title">宾客入场</text><text class="schedule-desc">签到、合影、入席</text></view>
-          </view>
-          <view class="schedule-item">
-            <text class="schedule-time">19:00</text>
-            <view><text class="schedule-title">婚礼仪式</text><text class="schedule-desc">证婚、誓言与合影</text></view>
           </view>
         </view>
       </view>
@@ -123,9 +118,10 @@
         <text class="kicker reveal">Travel Guide</text>
         <view class="travel-title-row">
           <text class="section-title reveal">周边逛吃推荐</text>
-          <button class="home-shortcut reveal" type="button" data-index="0" bindtap="goTo">返回首页</button>
+          <button class="home-shortcut reveal active" type="button" data-index="0" bindtap="goTo">返回首页</button>
         </view>
-        <text class="lead reveal">以婚礼酒店为中心，我们整理了适合顺路逛吃的目的地清单，供您参考。</text>
+        <text class="lead reveal">龙海既承载着闽南文化、侨乡记忆与海丝传统，也在古村古厝、庙宇信俗和方言饮食中保留着鲜活的人文气质。</text>
+        <text class="lead reveal">以婚礼酒店为中心，我们整理了适合顺路逛吃的推荐清单，供您参考。</text>
       </view>
 
       <view class="guide-panel reveal" mark:guidePanel="true">
