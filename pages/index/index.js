@@ -370,27 +370,27 @@ const guideCategories = ["景点", "美食"];
 const guideRoutes = [
   {
     name: "老城夜游",
-    points: ["钻石大酒店", "后港古街", "石码老街", "五香 / 卤面"],
+    points: ["钻石大酒店（兰欧国际酒店）", "后港古街", "石码老街", "五香 / 卤面"],
     desc: "适合 7 月晚上，距离短、吃得集中，亲友自由度最高。",
-    query: "龙海钻石大酒店 到 后港古街 石码老街"
+    query: "龙海钻石大酒店（兰欧国际酒店） 到 后港古街 石码老街"
   },
   {
     name: "海丝古港",
-    points: ["钻石大酒店", "月港古镇", "龙江颂景区", "海鲜排档"],
+    points: ["钻石大酒店（兰欧国际酒店）", "月港古镇", "龙江颂景区", "海鲜排档"],
     desc: "人文和江景都兼顾，建议傍晚走，避开正午高温。",
-    query: "龙海钻石大酒店 到 月港古镇 龙江颂景区"
+    query: "龙海钻石大酒店（兰欧国际酒店） 到 月港古镇 龙江颂景区"
   },
   {
     name: "古厝拍照",
-    points: ["钻石大酒店", "埭美古村", "江东桥", "石码夜宵"],
+    points: ["钻石大酒店（兰欧国际酒店）", "埭美古村", "江东桥", "石码夜宵"],
     desc: "适合自驾或打车，主打闽南红砖古厝和历史古桥。",
-    query: "龙海钻石大酒店 到 埭美古村 江东桥"
+    query: "龙海钻石大酒店（兰欧国际酒店） 到 埭美古村 江东桥"
   },
   {
     name: "漳州延伸",
-    points: ["钻石大酒店", "南山寺", "漳州古城", "古城小吃"],
+    points: ["钻石大酒店（兰欧国际酒店）", "南山寺", "漳州古城", "古城小吃"],
     desc: "更偏主城游，部分点位在 20km 边界，时间充裕再选。",
-    query: "龙海钻石大酒店 到 漳州古城 南山寺"
+    query: "龙海钻石大酒店（兰欧国际酒店） 到 漳州古城 南山寺"
   }
 ];
 
@@ -623,11 +623,11 @@ Page({
       latitude: 24.432877,
       longitude: 117.829025,
       scale: 18,
-      name: "龙海钻石大酒店",
+      name: "龙海钻石大酒店（兰欧国际酒店）",
       address: "福建省漳州市龙海区海澄镇月港大道3号 · 水晶厅",
       fail: () => {
         wx.setClipboardData({
-          data: "福建省漳州市龙海区海澄镇月港大道3号 龙海钻石大酒店 水晶厅",
+          data: "福建省漳州市龙海区海澄镇月港大道3号 龙海钻石大酒店（兰欧国际酒店） 水晶厅",
           success: () => wx.showToast({ title: "已复制酒店地址", icon: "none" })
         });
       }
@@ -635,7 +635,7 @@ Page({
   },
 
   copyMapKeyword(event) {
-    const query = event.currentTarget.dataset.query || "福建省漳州市龙海区钻石大酒店";
+    const query = event.currentTarget.dataset.query || "福建省漳州市龙海区钻石大酒店（兰欧国际酒店）";
     const provider = event.currentTarget.dataset.provider || "地图";
     wx.setClipboardData({
       data: query,

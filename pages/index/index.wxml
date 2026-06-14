@@ -60,10 +60,10 @@
 
         <view class="venue-box">
           <image class="venue-photo" src="https://wedding-1307100970.cos.ap-guangzhou.myqcloud.com/hotel.jpg" mode="aspectFill" />
-          <text class="venue-title">福建省漳州市龙海区钻石大酒店 · 水晶厅</text>
+          <text class="venue-title">福建省漳州市龙海区钻石大酒店（兰欧国际酒店） · 水晶厅</text>
           <view class="map-row">
             <button class="map-primary" type="button" bindtap="openVenueLocation">打开地图</button>
-            <button type="button" data-query="福建省漳州市龙海区钻石大酒店" bindtap="copyMapKeyword">复制地址</button>
+            <button type="button" data-query="福建省漳州市龙海区钻石大酒店（兰欧国际酒店）" bindtap="copyMapKeyword">复制地址</button>
           </view>
         </view>
 
