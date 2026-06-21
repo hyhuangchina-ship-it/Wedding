@@ -47,6 +47,16 @@ const guideItems = [
     query: "漳州 龙海 后港古街",
     image: guideImage("hougang.jpg")
   },
+    {
+    name: "海澄都城隍庙",
+    category: "古迹",
+    distance: "1-3km",
+    time: "上午 / 傍晚",
+    tags: ["海澄老城", "民俗", "短停留"],
+    desc: "离酒店和月港片区都近，适合想短时间看海澄老城民俗建筑的亲友，安排在饭前饭后都顺路。",
+    query: "漳州 龙海 海澄都城隍庙",
+    image: guideImage("chenghuangmiao.jpg")
+  },
   {
     name: "月港古镇",
     category: "古迹",
@@ -93,7 +103,7 @@ const guideItems = [
     distance: "18-22km",
     time: "下午 / 晚上",
     tags: ["压线点", "古城", "小吃"],
-    desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中，严格 20km 时可作为边界备选。",
+    desc: "漳州主城代表街区，古厝、小吃和街巷氛围集中。",
     query: "漳州古城",
     image: guideImage("zhangzhougucheng.jpeg")
   },
@@ -103,19 +113,9 @@ const guideItems = [
     distance: "20km 左右",
     time: "清晨",
     tags: ["山水石刻", "4A", "偏户外"],
-    desc: "漳州知名山水石刻景区，可能略超 20km，适合作为有车亲友的延伸备选。",
+    desc: "漳州知名山水石刻景区。",
     query: "漳州 云洞岩",
     image: guideImage("yundongyan.jpeg")
-  },
-  {
-    name: "海澄都城隍庙",
-    category: "古迹",
-    distance: "1-3km",
-    time: "上午 / 傍晚",
-    tags: ["海澄老城", "民俗", "短停留"],
-    desc: "离酒店和月港片区都近，适合想短时间看海澄老城民俗建筑的亲友，安排在饭前饭后都顺路。",
-    query: "漳州 龙海 海澄都城隍庙",
-    image: guideImage("chenghuangmiao.jpg")
   },
   {
     name: "瑞竹岩",
